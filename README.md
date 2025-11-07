@@ -77,7 +77,7 @@ Pipeline de dados:
 - Conta em Heroku/Render/Fly.io (para deploy)
 
 ### Passos
-```bash
+bash
 # Clonar repositório
 git clone https://github.com/seu-usuario/seu-repo.git
 cd seu-repo
@@ -95,3 +95,59 @@ python scripts/scraping.py
 
 # Rodar API localmente
 uvicorn api.main:app --reload
+´´´
+
+
+
+📡 Endpoints da API
+Core
+GET /api/v1/books → Lista todos os livros.
+
+GET /api/v1/books/{id} → Detalhes de um livro específico.
+
+GET /api/v1/books/search?title={title}&category={category} → Busca por título/categoria.
+
+GET /api/v1/categories → Lista categorias disponíveis.
+
+GET /api/v1/health → Status da API.
+
+Insights (opcionais)
+GET /api/v1/stats/overview → Estatísticas gerais.
+
+GET /api/v1/stats/categories → Estatísticas por categoria.
+
+GET /api/v1/books/top-rated → Livros com melhor avaliação.
+
+GET /api/v1/books/price-range?min={min}&max={max} → Livros por faixa de preço.
+
+ML-ready (bônus)
+GET /api/v1/ml/features → Dados formatados para features.
+
+GET /api/v1/ml/training-data → Dataset para treinamento.
+
+POST /api/v1/ml/predictions → Endpoint para predições.
+
+📅 Roadmap
+Confira o planejamento completo em ROADMAP.md. Resumo das sprints:
+
+Sprint 1 (Semanas 1–3): Scraping + API Core + Deploy.
+
+Sprint 2 (Semanas 4–6): Insights + ML-ready + Autenticação + Apresentação.
+
+🌐 Deploy
+A API está disponível publicamente em: 👉 Link do Deploy
+
+🎥 Vídeo de Apresentação
+👉 Link do Vídeo
+
+👨‍💻 Contribuição
+Faça um fork do projeto.
+
+Crie uma branch (feature/nova-feature).
+
+Commit suas alterações.
+
+Abra um Pull Request.
+
+📜 Licença
+Este projeto está sob a licença MIT. Consulte o arquivo LICENSE para mais detalhes.
