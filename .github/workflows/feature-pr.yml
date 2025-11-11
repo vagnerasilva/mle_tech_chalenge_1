@@ -15,8 +15,8 @@ jobs:
 
     steps:
     # 1. Checkout do código
-        - name: Checkout repository
-        uses: actions/checkout@v4
+    - name: Checkout repository
+    uses: actions/checkout@v4
 
     # 2. Criar Pull Request para develop
         - name: Create Pull Request to develop
