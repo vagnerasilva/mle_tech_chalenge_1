@@ -1,0 +1,29 @@
+name: Auto PR from Feature to Develop
+
+on:
+  push:
+    branches:
+      - 'feature/*'
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  create-pr:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout do código
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Criar Pull Request para develop
+      - name: Create Pull Request to develop
+        uses: peter-evans/create-pull-request@v6
+        with:
+          base: develop
+          branch: ${{ github.ref_name }}
+          title: "Merge ${{ github.ref_name }} into develop"
+          body: |
+            Este PR foi criado automaticamente pelo GitHub Actions.
