@@ -3,27 +3,71 @@ name: Auto PR from Feature to Develop
 on:
   push:
     branches:
-      - 'feature/*'
+      - 'feature/**' # cobre feature/foo e feature/foo/bar
 
 permissions:
   contents: write
   pull-requests: write
 
 jobs:
-  create-pr:
+  create-or-update-pr:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout do código
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
-
-      # 2. Criar Pull Request para develop
-      - name: Create Pull Request to develop
-        uses: peter-evans/create-pull-request@v6
         with:
-          base: develop
-          branch: ${{ github.ref_name }}
-          title: "Merge ${{ github.ref_name }} into develop"
-          body: |
-            Este PR foi criado automaticamente pelo GitHub Actions.
+          fetch-depth: 0
+
+      - name: Create or update PR to develop
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const headBranch = context.ref.replace('refs/heads/', '');
+            const baseBranch = 'develop';
+
+            core.info(`Repo: ${owner}/${repo}`);
+            core.info(`Head: ${headBranch}`);
+            core.info(`Base: ${baseBranch}`);
+
+            // 1) Confere se a base existe
+            try {
+              await github.rest.repos.getBranch({ owner, repo, branch: baseBranch });
+              core.info(`Base '${baseBranch}' encontrada.`);
+            } catch (e) {
+              core.setFailed(`A branch base '${baseBranch}' não existe no remoto.`);
+              return;
+            }
+
+            // 2) Confere se já existe PR aberto dessa head para essa base
+            const { data: openPRs } = await github.rest.pulls.list({
+              owner, repo, state: 'open', per_page: 100, base: baseBranch
+            });
+            const existing = openPRs.find(pr => pr.head && pr.head.ref === headBranch);
+
+            const title = `Merge ${headBranch} into ${baseBranch}`;
+            const body = `Este PR foi criado/atualizado automaticamente pelo GitHub Actions.`;
+
+            if (existing) {
+              core.info(`PR existente encontrado: #${existing.number}. Atualizando título/descrição.`);
+              await github.rest.pulls.update({
+                owner, repo, pull_number: existing.number, title, body
+              });
+              return;
+            }
+
+            // 3) Tenta criar PR
+            try {
+              const { data: newPr } = await github.rest.pulls.create({
+                owner, repo, head: headBranch, base: baseBranch, title, body
+              });
+              core.info(`PR criado: #${newPr.number}`);
+            } catch (err) {
+              // Mensagens úteis quando falha:
+              // - "No commits between ..." => a base já contém todos os commits da head
+              // - Permissões/token
+              core.setFailed(`Falha ao criar PR: ${err.message}`);
+            }
