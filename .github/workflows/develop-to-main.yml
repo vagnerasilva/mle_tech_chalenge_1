@@ -1,0 +1,70 @@
+name: Auto PR from Develop to Main
+
+on:
+  push:
+    branches:
+      - develop
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  create-or-update-pr:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Create or update PR to main
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const headBranch = 'develop';
+            const baseBranch = 'main';
+
+            core.info(`Repo: ${owner}/${repo}`);
+            core.info(`Head: ${headBranch}`);
+            core.info(`Base: ${baseBranch}`);
+
+            // Confere se a branch base existe
+            try {
+              await github.rest.repos.getBranch({ owner, repo, branch: baseBranch });
+              core.info(`Base '${baseBranch}' encontrada.`);
+            } catch (e) {
+              core.setFailed(`A branch base '${baseBranch}' não existe no remoto.`);
+              return;
+            }
+
+            // Procura PR existente da head -> base
+            const { data: openPRs } = await github.rest.pulls.list({
+              owner, repo, state: 'open', base: baseBranch, per_page: 100
+            });
+            const existing = openPRs.find(pr => pr.head && pr.head.ref === headBranch);
+
+            const title = `Merge ${headBranch} into ${baseBranch}`;
+            const body = `Este PR foi criado/atualizado automaticamente pelo GitHub Actions.`;
+
+            if (existing) {
+              core.info(`PR existente encontrado: #${existing.number}. Atualizando título/descrição.`);
+              await github.rest.pulls.update({
+                owner, repo, pull_number: existing.number, title, body
+              });
+              return;
+            }
+
+            // Cria novo PR
+            try {
+              const { data: newPr } = await github.rest.pulls.create({
+                owner, repo, head: headBranch, base: baseBranch, title, body
+              });
+              core.info(`PR criado: #${newPr.number}`);
+            } catch (err) {
+              core.setFailed(`Falha ao criar PR: ${err.message}`);
+            }
