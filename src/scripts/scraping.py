@@ -1,3 +1,29 @@
+"""
+===========================================================
+ Script:    scraping.py
+ Autor:     Cecilia
+ Data:      15/11/2025
+ Versão:    1.0
+ Descrição: Este script realiza o web scraping de todas as páginas dos livros
+            do site https://books.toscrape.com/ obtendo todas as infos sobre eles.
+
+ Dependências:
+    - Python 3.14
+    - beautifulsoup4
+    - lxml
+    - requests
+    - urllib3
+
+ Como executar:
+    no terminal:
+        $ python scraping.py (Dessa forma retornará as 2 primeiras páginas)
+    importando:
+        from src.scripts.scraping import scrape_books
+        scrape_books() (Sem o parametro retorna as infos dos livros das 50 paginas)
+
+===========================================================
+"""
+
 from bs4 import BeautifulSoup
 import os
 import pprint
@@ -64,7 +90,22 @@ def get_book_info(book_url: str) -> dict:
     return infos
 
 
-def scrape_books(pages: int = 50) -> list:
+def get_total_pags():
+    """
+    Obtém o número total de páginas disponíveis no site base.
+
+    Returns:
+        int: Quantidade total de páginas encontradas na paginação.
+    """
+    url = f'{BASE_URL}page-1.html'
+    res = requests.get(url)
+    soup = BeautifulSoup(res.text, "lxml")
+    paginacao = soup.select_one("li.current").get_text(strip=True)
+    total_paginas = int(paginacao.split("of")[-1])
+    return total_paginas
+
+
+def scrape_books(pages: int = None) -> list:
     """
         Varre o número de páginas passado como parametro pages para obter
         os links das páginas de cada livro e então chama a função que faz
@@ -77,6 +118,7 @@ def scrape_books(pages: int = 50) -> list:
         list: Lista de dicionários com as informações do livros presentes
         nas páginas que foram percorridas.
     """
+    pages = get_total_pags() if pages is None else pages
     books = []
     for page in range(1, pages + 1):
         url = f'{BASE_URL}page-{page}.html'
