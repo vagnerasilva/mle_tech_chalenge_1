@@ -68,7 +68,7 @@ def scrape_books(pages: int = 50) -> list:
     """
         Varre o número de páginas passado como parametro pages para obter
         os links das páginas de cada livro e então chama a função que faz
-        o web scrapping da pagina do livro.
+        o web scraping da pagina do livro.
 
     Args:
         pages (opcional, int): Número de páginas onde coletaremos os livros.
