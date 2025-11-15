@@ -32,7 +32,7 @@ import requests
 import sys
 from urllib.parse import urljoin
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
-from src.utils.constants import BASE_URL
+from app.utils.constants import BASE_URL
 
 
 def regex_key_book_info(key: str) -> str:
