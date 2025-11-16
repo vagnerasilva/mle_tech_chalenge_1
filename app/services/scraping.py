@@ -172,7 +172,6 @@ def scrape_books(pages: int = None) -> list:
             book_url = urljoin(BASE_URL, link['href'])
             book_data = get_book_info(book_url)
             books.append(book_data)
-            break
 
     return books
 
