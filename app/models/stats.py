@@ -8,7 +8,7 @@ class BookOverviewSchema(BaseModel):
     distribution_rating: dict
 
     class Config:
-        from_attributes = True   # permite converter de objetos SQLAlchemy
+        from_attributes = True
 
 
 class CategoryOverviewSchema(BaseModel):
@@ -17,4 +17,4 @@ class CategoryOverviewSchema(BaseModel):
     avg_price: float
 
     class Config:
-        from_attributes = True   # permite converter de objetos SQLAlchemy
+        from_attributes = True

@@ -1,8 +1,27 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse
+from sqlalchemy.exc import SQLAlchemyError
 from app.routers import book, scraping, category, health, stats
 from app.utils.constants import API_PREFIX
 
 app = FastAPI(title="Books to scrap")
+
+
+@app.middleware("http")
+async def catch_exceptions_middleware(request: Request, call_next):
+    try:
+        response = await call_next(request)
+        return response
+    except SQLAlchemyError as e:
+        return JSONResponse(
+            status_code=500,
+            content={"message": "Erro no banco de dados.", "detail": f"{e}"}
+        )
+    except Exception as e:
+        return JSONResponse(
+            status_code=500,
+            content={"message": "Erro interno inesperado.", "detail": f"{e}"}
+        )
 
 app.include_router(
         book.router,

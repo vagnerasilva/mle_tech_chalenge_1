@@ -39,7 +39,7 @@ def get_overview(db: Session) -> BookOverviewSchema:
         .group_by(Book.rating)
         .all()
     )
-    print(rating_dist[0])
+
     return {
         "total_books": total_books,
         "avg_price": avg_price,
@@ -60,7 +60,6 @@ def get_category_overview(db: Session) -> list[CategoryOverviewSchema]:
         .all()
     )
 
-    # Converte para lista de dicionários
     return [
         {
             "category": category_name,
