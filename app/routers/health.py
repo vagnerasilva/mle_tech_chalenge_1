@@ -6,8 +6,9 @@ from app.models.category import Category
 router = APIRouter()
 
 
-@router.get("/")
+@router.get("/", response_model=dict)
 def health_check(db: Session = Depends(get_db)):
+    """Verifica status da API e conectividade com os dados."""
     try:
         db.query(Category)
         db_status = "ok"

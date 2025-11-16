@@ -11,4 +11,5 @@ router = APIRouter()
 
 @router.get("/", response_model=list[CategorySchema])
 def lista_categorias(db: Session = Depends(get_db)):
+    """Lista todas as categorias de livros"""
     return category.get_categories(db)
