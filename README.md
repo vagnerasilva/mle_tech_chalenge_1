@@ -131,7 +131,7 @@ Este documento apresenta o planejamento do projeto em formato **roadmap**, divid
 ### Passos
 bash
 # Clonar repositório
-git clone https://github.com/seu-usuario/seu-repo.git
+git clone https://github.com/vagnerasilva/mle_tech_chalenge_1.git
 cd seu-repo
 
 # Criar ambiente virtual
