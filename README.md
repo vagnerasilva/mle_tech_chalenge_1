@@ -5,7 +5,7 @@
 
 ## 📌 Descrição
 Este projeto tem como objetivo criar uma **API pública para consulta de livros**, utilizando dados extraídos via **web scraping** do site [Books to Scrape](https://books.toscrape.com/).  
-A API foi pensada para ser **escalável, reutilizável e pronta para integração com modelos de Machine Learning**.
+A API foi pensada para ser **escalável, reutilizável e pronta para integração com modelos de Machine Learning**, expondo uma api RESFUL para interaçäo com estes dados.
 
 ---
 
@@ -19,6 +19,55 @@ Pipeline de dados:
 ![Diagrama Arquitetural](docs/arquitetura.png) <!-- substitua pelo seu diagrama -->
 
 ---
+### 📂 Estrutura do Repositório
+
+```
+.
+├── README.md
+├── api
+│   └── readme.md
+├── app
+│   ├── __init__.py
+│   ├── app.py
+│   ├── dependencies.py
+│   ├── models
+│   │   ├── __init__.py
+│   │   ├── base.py
+│   │   ├── book.py
+│   │   ├── category.py
+│   │   └── stats.py
+│   ├── routers
+│   │   ├── __init__.py
+│   │   ├── book.py
+│   │   ├── category.py
+│   │   ├── health.py
+│   │   ├── scraping.py
+│   │   └── stats.py
+│   ├── services
+│   │   ├── __init__.py
+│   │   ├── book.py
+│   │   ├── category.py
+│   │   ├── scraping.py
+│   │   └── stats.py
+│   └── utils
+│       ├── __init__.py
+│       └── constants.py
+├── create_db.py
+├── db
+│   ├── book_scraping_model
+│   │   ├── __init__.py
+│   │   ├── book.py
+│   │   └── category.py
+│   └── books.db
+├── docs
+│   ├── arquivo.txt
+│   ├── book_scraping_model.md
+│   ├── readme.md
+│   └── requirements.txt
+├── requirements.txt
+└── tests
+    └── readme.md
+```
 
 ## 📌 Roadmap da execuçäo Projeto – API Pública para Consulta de Livros
 
@@ -54,8 +103,6 @@ Este documento apresenta o planejamento do projeto em formato **roadmap**, divid
 - Cada etapa depende da anterior (ex.: API Core só começa após Scraping).  
 - O roadmap foi pensado para **entregas incrementais**: MVP na Sprint 1 e funcionalidades avançadas na Sprint 2.  
 - Este documento deve ser usado em conjunto com o **Kanban detalhado** para acompanhamento micro das tarefas.  
-
-
 
 
 # 🚀 Instalação e Configuração
