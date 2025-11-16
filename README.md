@@ -4,8 +4,22 @@
 # 📚 API Pública para Consulta de Livros – Projeto de Recomendação
 
 ## 📌 Descrição
-Este projeto tem como objetivo criar uma **API pública para consulta de livros**, utilizando dados extraídos via **web scraping** do site [Books to Scrape](https://books.toscrape.com/).  
-A API foi pensada para ser **escalável, reutilizável e pronta para integração com modelos de Machine Learning**, expondo uma api RESFUL para interaçäo com estes dados.
+Este projeto faz parte do Tech Challenge, cujo objetivo é aplicar de forma integrada os conhecimentos adquiridos na fase, desenvolvendo uma solução completa de dados (**web scraping** do site [Books to Scrape](https://books.toscrape.com/)), desde a coleta até a disponibilização via API pública.
+
+O desafio consiste em criar uma API pública para consulta de livros, alimentada por dados extraídos através de um sistema automatizado de web scraping do site Books to Scrape.
+
+Como Engenheiro(a) de Machine Learning no contexto do projeto, o primeiro passo é estruturar um pipeline capaz de:
+
+- Extrair os dados brutos do site;
+
+- Transformar e padronizar as informações coletadas;
+
+- Armazenar esses dados localmente;
+
+- Disponibilizar as informações através de uma API RESTful escalável e reutilizável, pronta para integração com futuros modelos de Machine Learning.
+
+A API foi projetada pensando em flexibilidade, boa organização arquitetural e facilidade de consumo por cientistas de dados, sistemas externos e serviços de recomendação.
+Com isso, este repositório reúne todos os componentes essenciais: o web scraper, a estruturação do pipeline de dados, a API pública, a documentação e o deploy em produção.
 
 ---
 
@@ -135,8 +149,9 @@ uvicorn api.main:app --reload
 
 
 
-📡 Endpoints da API
-Core
+## 📡 Endpoints da API
+- Core
+
 GET /api/v1/books → Lista todos os livros.
 
 GET /api/v1/books/{id} → Detalhes de um livro específico.
@@ -147,7 +162,7 @@ GET /api/v1/categories → Lista categorias disponíveis.
 
 GET /api/v1/health → Status da API.
 
-Insights (opcionais)
+## Insights (opcionais)
 GET /api/v1/stats/overview → Estatísticas gerais.
 
 GET /api/v1/stats/categories → Estatísticas por categoria.
@@ -156,34 +171,22 @@ GET /api/v1/books/top-rated → Livros com melhor avaliação.
 
 GET /api/v1/books/price-range?min={min}&max={max} → Livros por faixa de preço.
 
-ML-ready (bônus)
+## ML-ready (bônus)
 GET /api/v1/ml/features → Dados formatados para features.
 
 GET /api/v1/ml/training-data → Dataset para treinamento.
 
 POST /api/v1/ml/predictions → Endpoint para predições.
 
-📅 Roadmap
-Confira o planejamento completo em ROADMAP.md. Resumo das sprints:
 
-Sprint 1 (Semanas 1–3): Scraping + API Core + Deploy.
-
-Sprint 2 (Semanas 4–6): Insights + ML-ready + Autenticação + Apresentação.
-
-🌐 Deploy
+# 🌐 Deploy
 A API está disponível publicamente em: 👉 Link do Deploy
 
-🎥 Vídeo de Apresentação
+# 🎥 Vídeo de Apresentação
 👉 Link do Vídeo
 
-👨‍💻 Contribuição
-Faça um fork do projeto.
 
-Crie uma branch (feature/nova-feature).
 
-Commit suas alterações.
-
-Abra um Pull Request.
 
 📜 Licença
 Este projeto está sob a licença MIT. Consulte o arquivo LICENSE para mais detalhes.
