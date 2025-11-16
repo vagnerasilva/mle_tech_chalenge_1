@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.routers import book, scraping, category, health
+from app.routers import book, scraping, category, health, stats
 from app.utils.constants import API_PREFIX
 
 app = FastAPI(title="Books to scrap")
@@ -23,4 +23,9 @@ app.include_router(
         health.router,
         prefix=f"{API_PREFIX}/health",
         tags=["health"]
+    )
+app.include_router(
+        stats.router,
+        prefix=f"{API_PREFIX}/stats",
+        tags=["stats"]
     )
