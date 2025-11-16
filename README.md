@@ -1,27 +1,33 @@
-# 📌 Roadmap do Projeto – API de Livros
+| ![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg) ![FastAPI](https://img.shields.io/badge/framework-FastAPI-009688?logo=fastapi) ![SQLite](https://img.shields.io/badge/Database-SQLite-003B57?logo=sqlite&logoColor=white) ![MIT License](https://img.shields.io/badge/license-MIT-yellow.svg) |
+|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
+
+# 📚 API Pública para Consulta de Livros – Projeto de Recomendação
+
+## 📌 Descrição
+Este projeto tem como objetivo criar uma **API pública para consulta de livros**, utilizando dados extraídos via **web scraping** do site [Books to Scrape](https://books.toscrape.com/).  
+A API foi pensada para ser **escalável, reutilizável e pronta para integração com modelos de Machine Learning**.
+
+---
+
+## 🏗️ Arquitetura
+Pipeline de dados:
+1. **Ingestão** → Web Scraping dos livros.  
+2. **Processamento** → Transformação e armazenamento em CSV.  
+3. **API** → Disponibilização dos dados via endpoints RESTful.  
+4. **Consumo** → Cientistas de dados e serviços de recomendação.  
+
+![Diagrama Arquitetural](docs/arquitetura.png) <!-- substitua pelo seu diagrama -->
+
+---
+
+## 📌 Roadmap da execuçäo Projeto – API Pública para Consulta de Livros
 
 Este documento apresenta o planejamento do projeto em formato **roadmap**, dividido em sprints de 3 semanas, com visão estilo **Gantt** e **heatmap visual** para destacar dependências entre tarefas.
 
 ---
 
-## 📅 Roadmap por Semana – Projeto API de Livros
 
-Legenda:
-- █ = execução da tarefa
-- → = dependência (só começa após a anterior)
-
-Semanas:   1     2     3     4     5     6
-----------------------------------------------
-Setup & Scraping       █████
-API Core                     → █████
-Deploy & Arquitetura                → █████
-Insights & Estatísticas                   → █████
-Bônus & ML-ready                               → █████
-Finalização & Apresentação                          → █████
-
----
-
-## 📊 Roadmap por Semana – Projeto API de Livros
+## 📊 Roadmap por Semana – Projeto API Pública para Consulta de Livros
 
 | Tarefa                          | Semana 1 | Semana 2 | Semana 3 | Semana 4 | Semana 5 | Semana 6 |
 |---------------------------------|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|
@@ -50,26 +56,9 @@ Finalização & Apresentação                          → █████
 - Este documento deve ser usado em conjunto com o **Kanban detalhado** para acompanhamento micro das tarefas.  
 
 
-# 📚 API Pública de Livros – Projeto de Recomendação
 
-## 📌 Descrição
-Este projeto tem como objetivo criar uma **API pública para consulta de livros**, utilizando dados extraídos via **web scraping** do site [Books to Scrape](https://books.toscrape.com/).  
-A API foi pensada para ser **escalável, reutilizável e pronta para integração com modelos de Machine Learning**.
 
----
-
-## 🏗️ Arquitetura
-Pipeline de dados:
-1. **Ingestão** → Web Scraping dos livros.  
-2. **Processamento** → Transformação e armazenamento em CSV.  
-3. **API** → Disponibilização dos dados via endpoints RESTful.  
-4. **Consumo** → Cientistas de dados e serviços de recomendação.  
-
-![Diagrama Arquitetural](docs/arquitetura.png) <!-- substitua pelo seu diagrama -->
-
----
-
-## 🚀 Instalação e Configuração
+# 🚀 Instalação e Configuração
 
 ### Pré-requisitos
 - Python 3.9+
