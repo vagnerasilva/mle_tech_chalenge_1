@@ -1,16 +1,28 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Depends, Query
+from sqlalchemy.orm import Session
 from app.services import book
-from app.models.model import User
+from app.models.book import BookSchema
+from app.dependencies import get_db
+from typing import Optional
 
 router = APIRouter()
 
-@router.get("/", response_model=list[User])
-def listar_books():
-    return book.get_users()
 
-@router.get("/{id}", response_model=User)
-def obter_book(user_id: int):
-    user = book.get_user_by_id(user_id)
-    if not user:
-        raise HTTPException(status_code=404, detail="Usuário não encontrado")
-    return user
+@router.get("/", response_model=list[BookSchema])
+def lista_books(db: Session = Depends(get_db)):
+    return book.get_books(db)
+
+
+@router.get("/search", response_model=list[BookSchema])
+def pesquisar_books(
+    title: Optional[str] = Query(None, description="Título do livro"),
+    category: Optional[str] = Query(None, description="Categoria do livro"),
+    db: Session = Depends(get_db)
+):
+    return book.filter_books(db, title, category)
+
+
+@router.get("/{book_id}", response_model=BookSchema)
+def obter_book(book_id: int, db: Session = Depends(get_db)):
+    # VAMOS SEGUIR COM O ID LITERAL OU UPC?
+    return book.get_book(book_id, db)

@@ -32,7 +32,34 @@ import requests
 import sys
 from urllib.parse import urljoin
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
-from app.utils.constants import BASE_URL
+from app.utils.constants import URL, BASE_URL
+
+RATING_MAPPER = {
+        "Zero": 0,
+        "One": 1,
+        "Two": 2,
+        "Three": 3,
+        "Four": 4,
+        "Five": 5,
+    }
+
+
+def get_categories():
+    """
+    Cria um dicionário com as categorias
+    e com seus respectivos índices.
+    """
+    res = requests.get(URL)
+    soup = BeautifulSoup(res.text, "lxml")
+
+    categories = soup.select("ul.nav-list ul li a")
+
+    result = []
+    for idx, cat in enumerate(categories, start=1):
+        nome = cat.get_text(strip=True)
+        result.append({"name": nome})
+
+    return result
 
 
 def regex_key_book_info(key: str) -> str:
@@ -53,6 +80,14 @@ def regex_key_book_info(key: str) -> str:
     return key.strip("_")
 
 
+def numbers_format(value) -> float:
+    """
+    Converte os preços que estão com como strings em float.
+    """
+    clean_str = value.replace("Â£", "").strip()
+    return float(clean_str)
+
+
 def get_book_info(book_url: str) -> dict:
     """
     Realiza o scraping da página específica do livro.
@@ -68,7 +103,7 @@ def get_book_info(book_url: str) -> dict:
     infos = dict()
 
     infos['title'] = soup.find('h1').text.strip()
-    infos['rating'] = soup.select_one('.star-rating')['class'][1]
+    infos['rating'] = RATING_MAPPER[soup.select_one('.star-rating')['class'][1]]
     infos['category'] = soup.select('ul.breadcrumb li')[2].text.strip()
 
     description_tag = soup.select_one('#product_description ~ p')
@@ -85,7 +120,13 @@ def get_book_info(book_url: str) -> dict:
             regex_key_book_info(row.th.text.strip()): row.td.text.strip()
             for row in table.find_all('tr')
         }
+
     infos = {**infos, **table_data}
+
+    infos['price_excl_tax'] = numbers_format(infos['price_excl_tax'])
+    infos['price_incl_tax'] = numbers_format(infos['price_incl_tax'])
+    infos['availability'] = int(re.search(r"\d+", infos['availability']).group())
+    infos['tax'] = numbers_format(infos['tax'])
 
     return infos
 
