@@ -111,6 +111,8 @@ Este documento apresenta o planejamento do projeto em formato **roadmap**, divid
 - 🟥 Bônus & ML-ready  
 - 🟧 Finalização & Apresentação  
 
+
+- [Trello](https://trello.com/b/7Lrv480a/tech-chalenge-i)
 ---
 
 ## 📌 Observações
