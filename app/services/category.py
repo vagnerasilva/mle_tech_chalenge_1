@@ -5,6 +5,10 @@ from sqlalchemy.orm import Session
 def post_categories(categories: list, db: Session):
     for category in categories:
         c = Category(**category)
+        exists = db.query(Category).filter_by(name=category['name']).first()
+        if exists:
+            print(f"Categoria {category['name']} já existe, ignorando inserção.")
+            continue
         db.add(c)
     db.commit()
 
@@ -14,8 +18,6 @@ def get_category_id_by_name(name: str, db: Session) -> int:
     return category.id
 
 
-def get_categories(db: Session) -> list[CategorySchema]:  
-    # VAMOS RETORNANR SO O NAME COM O NAME E ID?
+def get_categories(db: Session) -> list[CategorySchema]:
     categories = db.query(Category).all()
     return categories
-    # return list(map(str, categories))

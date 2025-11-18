@@ -9,6 +9,10 @@ def post_books(books_infos: List[dict], db: Session) -> None:
     for book in books_infos:
         book['category_id'] = category.get_category_id_by_name(book['category'], db)
         del book['category']
+        exists = db.query(Book).filter_by(upc=book['upc']).first()
+        if exists:
+            print(f"Livro com UPC {book['upc']} já existe, ignorando inserção.")
+            continue
         db.add(Book(**book))
     db.commit()
 
