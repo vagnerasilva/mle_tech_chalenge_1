@@ -18,8 +18,16 @@ from starlette.middleware.sessions import SessionMiddleware
 from app.settings import settings
 from app.services.auth_middleware import AuthMiddleware
 
-app = FastAPI(title="Books to scrap")
-
+#app = FastAPI(title="Books to scrap")
+app = FastAPI(
+    title="Books to scrap",
+    description="Documentação da API",
+    version="1.0.0",
+    servers=[
+        {"url": "https://mle-tech-chalenge-1.vercel.app/", "description": "Produção"},
+        {"url": "http://localhost:8000/", "description": "Desenvolvimento"},
+    ],
+)
 ## Importante pra poder funcionar na porta principal do Vercel 
 if __name__ == "__main__":
     import uvicorn
