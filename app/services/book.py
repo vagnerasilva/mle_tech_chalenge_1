@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 from app.models.book import Book, BookSchema
 from app.services import category
 from typing import Optional
+from fastapi import HTTPException
 
 
 def post_books(books_infos: List[dict], db: Session) -> None:
@@ -40,3 +41,26 @@ def filter_books(
         query = query.join(Book.category).filter(Book.category.has(name=category))
 
     return query.all()
+
+
+def get_best_book(quant, db) -> List[BookSchema]:
+    books = db.query(Book).order_by(Book.rating.desc()).all()
+    return books[:quant]
+
+
+def get_books_between_prices(
+    db: Session,
+    min: float,
+    max: float
+):
+    if min > max:
+        raise HTTPException(
+            status_code=400,
+            detail="O valor mínimo não pode ser maior que o máximo"
+            )
+
+    return (
+        db.query(Book)
+        .filter(Book.price_incl_tax >= min, Book.price_incl_tax <= max)
+        .all()
+    )
