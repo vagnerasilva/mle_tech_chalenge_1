@@ -1,33 +1,8 @@
-from typing import List
 from sqlalchemy.orm import Session
-from app.models.book import Book, BookSchema
+from app.models.book import Book
 from app.models.stats import BookOverviewSchema, CategoryOverviewSchema
 from app.models.category import Category
-from fastapi import HTTPException
 from sqlalchemy import func
-
-
-def get_best_book(quant, db) -> List[BookSchema]:
-    books = db.query(Book).order_by(Book.rating.desc()).all()
-    return books[:quant]
-
-
-def get_books_between_prices(
-    db: Session,
-    min: float,
-    max: float
-):
-    if min > max:
-        raise HTTPException(
-            status_code=400,
-            detail="O valor mínimo não pode ser maior que o máximo"
-            )
-
-    return (
-        db.query(Book)
-        .filter(Book.price_incl_tax >= min, Book.price_incl_tax <= max)
-        .all()
-    )
 
 
 def get_overview(db: Session) -> BookOverviewSchema:
