@@ -1,0 +1,60 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.5 Safari/605.1.15" version="29.1.1">
+  <diagram name="Page-1" id="xf86PRlAleP26mCa5P9-">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="k_FuoZFftCP3lA5iLjKJ-1" parent="1" style="whiteSpace=wrap;strokeWidth=2;fillColor=light-dark(#FFFFFF,#450CFF);" value="BooksToScrape Website" vertex="1">
+          <mxGeometry height="54" width="226" x="301" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="k_FuoZFftCP3lA5iLjKJ-2" parent="1" style="whiteSpace=wrap;strokeWidth=2;fillColor=light-dark(#FFFFFF,#450CFF);" value="Serviço de Scraping&#xa;scraping.py" vertex="1">
+          <mxGeometry height="78" width="176" x="326" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="k_FuoZFftCP3lA5iLjKJ-3" parent="1" style="whiteSpace=wrap;strokeWidth=2;fillColor=light-dark(#FFFFFF,#450CFF);" value="Modelos &#xa;book.py / category.py" vertex="1">
+          <mxGeometry height="78" width="231" x="30" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="k_FuoZFftCP3lA5iLjKJ-4" parent="1" style="shape=cylinder3;boundedLbl=1;backgroundOutline=1;size=10;strokeWidth=2;whiteSpace=wrap;fillColor=light-dark(#FFFFFF,#450CFF);" value="Banco de Dados SQLite&#xa;books.db" vertex="1">
+          <mxGeometry height="101" width="166" x="331" y="410" as="geometry" />
+        </mxCell>
+        <mxCell id="k_FuoZFftCP3lA5iLjKJ-5" parent="1" style="whiteSpace=wrap;strokeWidth=2;fillColor=light-dark(#FFFFFF,#450CFF);" value="Aplicação FastAPI&#xa;app.py" vertex="1">
+          <mxGeometry height="78" width="198" x="315" y="584.5" as="geometry" />
+        </mxCell>
+        <mxCell id="k_FuoZFftCP3lA5iLjKJ-6" parent="1" style="whiteSpace=wrap;strokeWidth=2;fillColor=light-dark(#FFFFFF,#450CFF);" value="Consumo por&#xa;Front-end / Postman / Scripts" vertex="1">
+          <mxGeometry height="102" width="260" x="284" y="729" as="geometry" />
+        </mxCell>
+        <mxCell id="k_FuoZFftCP3lA5iLjKJ-7" edge="1" parent="1" source="k_FuoZFftCP3lA5iLjKJ-1" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1;entryX=0.5;entryY=0;rounded=0;fillColor=light-dark(#FFFFFF,#450CFF);" target="k_FuoZFftCP3lA5iLjKJ-2" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="k_FuoZFftCP3lA5iLjKJ-8" edge="1" parent="1" source="k_FuoZFftCP3lA5iLjKJ-2" style="curved=1;startArrow=none;endArrow=block;exitX=0;exitY=0.25;entryX=1;entryY=0.25;rounded=0;fillColor=light-dark(#FFFFFF,#450CFF);exitDx=0;exitDy=0;entryDx=0;entryDy=0;" target="k_FuoZFftCP3lA5iLjKJ-3" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="k_FuoZFftCP3lA5iLjKJ-9" edge="1" parent="1" source="k_FuoZFftCP3lA5iLjKJ-2" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1;entryX=0.5;entryY=0;rounded=0;fillColor=light-dark(#FFFFFF,#450CFF);exitDx=0;exitDy=0;" target="k_FuoZFftCP3lA5iLjKJ-4" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="k_FuoZFftCP3lA5iLjKJ-10" edge="1" parent="1" source="k_FuoZFftCP3lA5iLjKJ-4" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1;entryX=0.5;entryY=0.01;rounded=0;fillColor=light-dark(#FFFFFF,#450CFF);" target="k_FuoZFftCP3lA5iLjKJ-5" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="k_FuoZFftCP3lA5iLjKJ-11" edge="1" parent="1" source="k_FuoZFftCP3lA5iLjKJ-5" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1.01;entryX=0.5;entryY=0;rounded=0;fillColor=light-dark(#FFFFFF,#450CFF);" target="k_FuoZFftCP3lA5iLjKJ-6" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="k_FuoZFftCP3lA5iLjKJ-12" edge="1" parent="1" source="k_FuoZFftCP3lA5iLjKJ-3" style="curved=1;startArrow=none;endArrow=block;exitX=1;exitY=0.75;entryX=0;entryY=0.75;rounded=0;fillColor=light-dark(#FFFFFF,#450CFF);exitDx=0;exitDy=0;entryDx=0;entryDy=0;" target="k_FuoZFftCP3lA5iLjKJ-2" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+            <mxPoint x="331.5" y="260" as="sourcePoint" />
+            <mxPoint x="266.5" y="260" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
