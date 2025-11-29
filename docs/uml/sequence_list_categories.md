@@ -1,4 +1,4 @@
-# Sequência: GET /categories (Mermaid)
+# Sequência: GET /categories 
 
 ```mermaid
 sequenceDiagram

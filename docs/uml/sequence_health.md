@@ -1,4 +1,4 @@
-# Sequência: GET /health (Mermaid)
+# Sequência: GET /health 
 
 ```mermaid
 sequenceDiagram

@@ -1,4 +1,4 @@
-# Sequência: GET /books/search (Mermaid)
+# Sequência: GET /books/search 
 
 ```mermaid
 sequenceDiagram

@@ -1,4 +1,4 @@
-# Sequência: GET /books/price-range (Mermaid)
+# Sequência: GET /books/price-range 
 
 ```mermaid
 sequenceDiagram

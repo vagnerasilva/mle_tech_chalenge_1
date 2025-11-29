@@ -1,5 +1,4 @@
-# Sequência: GET /books/top-rated (Mermaid)
-
+# Sequência: GET /books/top-rated 
 ```mermaid
 sequenceDiagram
     participant Client
