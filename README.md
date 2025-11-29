@@ -175,27 +175,40 @@ Este documento apresenta o planejamento do projeto em formato **roadmap**, divid
 ### Pré-requisitos
 - Python 3.9+
 - Pip ou Poetry
-- Conta em Heroku/Render/Fly.io (para deploy)
+- Conta em vercel.io
 
 ### Passos
 bash
 # Clonar repositório
+```bash
 git clone https://github.com/vagnerasilva/mle_tech_chalenge_1.git
 cd seu-repo
-
+```
 # Criar ambiente virtual
+```bash
 python -m venv venv
 source venv/bin/activate   # Linux/Mac
 venv\Scripts\activate      # Windows
+```
+
 
 # Instalar dependências
+```bash
 pip install -r requirements.txt
+```
+
 
 # Executar scraping
+```bash
 python scripts/scraping.py
+```
+
 
 # Rodar API localmente
+```bash
 uvicorn api.main:app --reload
+```
+
 ´´´
 
 
