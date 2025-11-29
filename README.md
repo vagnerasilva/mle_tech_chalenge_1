@@ -29,7 +29,7 @@ Pipeline de dados:
 3. **API** → Disponibilização dos dados via endpoints RESTful.  
 4. **Consumo** → Cientistas de dados e serviços de recomendação.  
 
-![Diagrama Arquitetural](https://drive.google.com/file/d/1mMyyxBYCTEJ7NRglnSQaWxvrKwlm-D3H/view?usp=sharing) <!-- substitua pelo seu diagrama -->
+![Diagrama Arquitetural link](https://drive.google.com/file/d/1mMyyxBYCTEJ7NRglnSQaWxvrKwlm-D3H/view?usp=sharing) <!-- substitua pelo seu diagrama -->
 
 ---
 
