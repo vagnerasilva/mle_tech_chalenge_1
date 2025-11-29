@@ -289,8 +289,8 @@ POST /api/v1/ml/predictions → Endpoint para predições.
 
 
 # 🌐 Deploy
-A API está disponível publicamente em: 👉 Link do Deploy
-[https://mle-tech-chalenge-1.vercel.app/](https://mle-tech-chalenge-1.vercel.app/)
+A API está disponível publicamente em: 
+👉 [https://mle-tech-chalenge-1.vercel.app/](https://mle-tech-chalenge-1.vercel.app/)
 
 # 🎥 Vídeo de Apresentação
 👉 Link do Vídeo
