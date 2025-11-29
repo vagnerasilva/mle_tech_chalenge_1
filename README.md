@@ -104,6 +104,25 @@ O script completo está em `docs/ddl.sql`.
 - GET /api/v1/books/top-rated → Livros com melhor avaliação.
 - GET /api/v1/books/price-range?min={min}&max={max} → Livros por faixa de preço.
 
+## 📊 Endpoints Detalhados (Diagramas de Sequência)
+
+Todos os endpoints possuem diagramas de sequência em `docs/uml/` descrevendo o fluxo de execução:
+
+### Core
+- [`sequence_list_books.md`](docs/uml/sequence_list_books.md) — GET /books (lista todos os livros)
+- [`sequence_get_book.md`](docs/uml/sequence_get_book.md) — GET /books/{id} (livro específico)
+- [`sequence_search_books.md`](docs/uml/sequence_search_books.md) — GET /books/search (busca por título/categoria)
+- [`sequence_list_categories.md`](docs/uml/sequence_list_categories.md) — GET /categories (lista categorias)
+- [`sequence_health.md`](docs/uml/sequence_health.md) — GET /health (status da API)
+
+### Insights
+- [`sequence_stats_overview.md`](docs/uml/sequence_stats_overview.md) — GET /stats/overview (estatísticas gerais)
+- [`sequence_stats_categories.md`](docs/uml/sequence_stats_categories.md) — GET /stats/categories (estatísticas por categoria)
+- [`sequence_top_rated.md`](docs/uml/sequence_top_rated.md) — GET /books/top-rated (livros melhor avaliados)
+- [`sequence_price_range.md`](docs/uml/sequence_price_range.md) — GET /books/price-range (livros por faixa de preço)
+
+Cada arquivo Markdown contém um diagrama Mermaid que pode ser visualizado diretamente no GitHub ou em ferramentas Mermaid.
+
 ## 🚀 Instalação rápida
 
 ```bash
