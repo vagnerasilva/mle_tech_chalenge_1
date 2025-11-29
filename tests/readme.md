@@ -2,6 +2,22 @@
 
 Este diretório contém a suite completa de testes para o projeto MLE Tech Challenge 1.
 
+## 📊 Cobertura de Testes
+
+**Cobertura geral: 66%** (28 testes passando)
+
+📈 [**Visualizar relatório completo de cobertura**](htmlcov/index.html)
+
+### Cobertura por módulo:
+- Modelos: **100%** ✅
+- Serviços (stats): **100%** ✅
+- Configurações: **100%** ✅
+- Serviços (book): **72%** 
+- Routers (stats): **86%**
+- Routers (book): **77%**
+- App: **82%**
+- Middleware: **43%**
+
 ## Estrutura dos Testes
 
 ### `conftest.py`
@@ -65,9 +81,11 @@ pytest tests/test_models.py::TestBookModel::test_create_book -v
 
 ### Com cobertura
 ```bash
-pytest tests/ --cov=app --cov-report=html
-# Abre htmlcov/index.html para visualizar relatório detalhado
+pytest tests/ --cov=app --cov-report=html:tests/htmlcov
+# Abre tests/htmlcov/index.html para visualizar relatório detalhado
 ```
+
+Ou visite o [relatório de cobertura HTML já gerado](htmlcov/index.html).
 
 ### Modo watch (reexecuta ao mudar arquivos)
 ```bash
@@ -95,21 +113,27 @@ Dependências de desenvolvimento:
 pip install -r requirements-dev.txt
 ```
 
-## Cobertura Atual
+## 📋 Notas de Cobertura
 
-**Resumo**: 66% da base de código testada (28 testes passando)
+**Módulos com cobertura completa (100%)**:
+- `app/models/` (Book, Category, Stats models)
+- `app/settings.py`
+- `app/utils/`
 
-**Por módulo**:
-- Modelos: 100%
-- Estatísticas: 100%
-- Configurações: 100%
-- Serviços: 72% (excluindo scraping)
-- Routers: 29-90% (limitado por AuthMiddleware)
-- Middleware: 43%
+**Módulos com cobertura alta (>80%)**:
+- `app/app.py` (82%)
+- `app/routers/stats.py` (86%)
+- `app/routers/category.py` (90%)
 
-**Ausente de testes**:
-- `scraping.py`: Requer requisições HTTP reais para sites
-- `auth_middleware.py`: Requer GitHub OAuth mocking complexo
+**Módulos com cobertura parcial**:
+- `app/services/book.py` (72%)
+- `app/routers/book.py` (77%)
+- `app/routers/logout.py` (62%)
+
+**Módulos com baixa cobertura (requerem infraestrutura complexa)**:
+- `app/services/scraping.py` (25%) — Requer requisições HTTP reais
+- `app/routers/home.py` (29%) — Requer HTML rendering
+- `app/services/auth_middleware.py` (43%) — Requer GitHub OAuth mocking
 - Endpoints protegidos: Requeriam fixture de autenticação
 
 ## Exemplo de Teste
