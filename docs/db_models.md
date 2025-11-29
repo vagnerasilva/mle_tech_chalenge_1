@@ -166,14 +166,6 @@ PRAGMA table_info(books);
 SELECT * FROM books LIMIT 10;
 ```
 
-## Recomendações e próximos passos
-
-- Se o projeto crescer, considere usar migrações com Alembic (SQLAlchemy + Alembic) para controlar alterações no esquema.
-- Adicione índices para colunas consultadas frequentemente (ex.: `rating`, `price_incl_tax`, `category_id`) para melhorar desempenho.
-- Para ingestões maiores, considere transações em lotes e tratamento de erros/rollback mais refinado.
-- Se quiser, posso gerar um ER diagram mais detalhado (imagem) a partir das definições de modelo e adicionar ao `docs/uml`.
-
----
 
 Arquivo(s) de referência do modelo
 
@@ -183,6 +175,4 @@ Arquivo(s) de referência do modelo
 - `app/services/book.py` (fluxo de inserção `post_books`)
 - `app/services/category.py` (mapeamento de nome -> id)
 
-Se quiser, eu posso também:
-- Gerar um arquivo SQL DDL completo baseado no modelo SQLAlchemy e adicioná-lo a `docs/`.
-- Incluir exemplos específicos por endpoint (request/response) no README ou em `docs/api_examples.md`.
+
