@@ -227,11 +227,3 @@ O módulo book_scraping_model foi estruturado para:
 ✔ permitir expansão futura (Reviews, Autores, etc.)
 
 ---
-
-Se quiser, posso gerar:
-
-✨ **Diagrama ER (PDF ou imagem)**
-✨ **README com instruções de instalação**
-✨ **Versão em inglês dessa documentação**
-
-Só pedir!
