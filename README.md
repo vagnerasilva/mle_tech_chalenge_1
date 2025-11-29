@@ -290,7 +290,9 @@ POST /api/v1/ml/predictions → Endpoint para predições.
 
 # 🌐 Deploy
 A API está disponível publicamente em: 
+
 👉 [https://mle-tech-chalenge-1.vercel.app/](https://mle-tech-chalenge-1.vercel.app/)
+
 
 # 🎥 Vídeo de Apresentação
 👉 Link do Vídeo
@@ -298,7 +300,9 @@ A API está disponível publicamente em:
 
 
 
-📜 Licença
+
+
+## 📜 Licença
 Este projeto está sob a licença MIT. Consulte o arquivo LICENSE para mais detalhes.
 
 
