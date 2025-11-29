@@ -130,6 +130,39 @@ pip install -r requirements.txt
 
 ---
 
+## 🧪 Testes Unitários
+
+A aplicação possui suite completa de testes com **66% de cobertura** de código.
+
+### Instalação de dependências de teste
+```bash
+pip install -r requirements-dev.txt
+```
+
+### Executar testes
+```bash
+# Todos os testes
+pytest tests/ -v
+
+# Com cobertura de código
+pytest tests/ --cov=app --cov-report=html
+
+# Testes específicos
+pytest tests/test_models.py -v      # Modelos (100% cobertura)
+pytest tests/test_services.py -v    # Serviços (72% cobertura)
+pytest tests/test_routers.py -v     # Endpoints
+```
+
+### Estrutura dos testes
+- **test_models.py** (10 testes): Validação de modelos SQLAlchemy e schemas Pydantic
+- **test_services.py** (18 testes): Testes da lógica de negócio (book, category, stats services)
+- **test_routers.py** (6 testes): Testes de endpoints públicos (requer configuração adicional para endpoints autenticados)
+- **conftest.py**: Fixtures reutilizáveis (DB mock, TestClient, dados de teste)
+
+📖 [Documentação detalhada](tests/README.md)
+
+---
+
 ---
 
 ## 📌 Roadmap da execuçäo Projeto pelo time
