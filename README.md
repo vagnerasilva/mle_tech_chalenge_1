@@ -12,7 +12,6 @@ Este projeto faz parte do Tech Challenge: coleta (web scraping), transformação
 Pipeline de dados:
 1. **Ingestão** → Web Scraping dos livros.  
 2. **Processamento** → Transformação e armazenamento local (SQLite).  
-3. **API** → Endpoints RESTful para consulta.  
 4. **Consumo** → Cientistas de dados e serviços de recomendação.
 
 ---
@@ -47,13 +46,11 @@ Pipeline de dados:
 ```
 
 ## 🧭 UML — Diagramas
-
 Os diagramas UML do projeto já estão disponíveis em `docs/uml/`. Eles documentam o modelo de domínio e os principais fluxos (sequência) entre router -> service -> db.
 
 
 Como visualizar os diagramas (Mermaid)
 
-- No GitHub: os arquivos Markdown com blocos Mermaid em `docs/uml/*.md` são renderizados automaticamente em visualização de arquivos.
 - No VSCode: instale uma extensão Mermaid (ex.: `vstirbu.vscode-mermaid-preview` ou `mermaid.live`) e abra os arquivos `docs/uml/*.md` para ver a pré-visualização.
 - Em alternativa, use o site https://mermaid.live/ para colar o conteúdo Mermaid e gerar imagens.
 
