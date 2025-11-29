@@ -4,116 +4,11 @@
 # 📚 API Pública para Consulta de Livros – Projeto de Recomendação
 
 ## 📌 Descrição
-Este projeto faz parte do Tech Challenge: coleta (web scraping), transformação e disponibilização de dados de livros via API RESTful (FastAPI + SQLite).
-
----
-
-## 🏗️ Arquitetura
-Pipeline de dados:
-1. **Ingestão** → Web Scraping dos livros.  
-2. **Processamento** → Transformação e armazenamento local (SQLite).  
-4. **Consumo** → Cientistas de dados e serviços de recomendação.
-
----
-
-### 📂 Estrutura do Repositório (resumo)
-
-```
-.
-├── README.md
-├── app
-│   ├── app.py
-│   ├── models
-│   │   ├── base.py
-│   │   ├── book.py
-│   │   ├── category.py
-│   │   └── stats.py
-│   ├── routers
-│   │   ├── book.py
-│   │   ├── scraping.py
-│   │   └── stats.py
-│   └── services
-├── create_db.py
-├── docs
-│   └── uml
-│       ├── class_diagram.md
-│       ├── class_diagram-1.png
-│       ├── sequence_get_book.md
-│       ├── sequence_get_book-1.png
-│       ├── sequence_scrape_populate.md
-│       └── sequence_scrape_populate-1.png
-└── requirements.txt
-```
-
-## 🧭 UML — Diagramas
-Os diagramas UML do projeto já estão disponíveis em `docs/uml/`. Eles documentam o modelo de domínio e os principais fluxos (sequência) entre router -> service -> db.
-
-
-Como visualizar os diagramas (Mermaid)
-
-- No VSCode: instale uma extensão Mermaid (ex.: `vstirbu.vscode-mermaid-preview` ou `mermaid.live`) e abra os arquivos `docs/uml/*.md` para ver a pré-visualização.
-- Em alternativa, use o site https://mermaid.live/ para colar o conteúdo Mermaid e gerar imagens.
-
-- `docs/ddl.sql` — Script DDL SQLite (CREATE TABLE para `categories` e `books`).
-
-
----
-
-## 📡 Endpoints da API (resumo)
-- GET /api/v1/books → Lista todos os livros.
-- GET /api/v1/books/{id} → Detalhes de um livro específico.
-- GET /api/v1/books/search?title={title}&category={category} → Busca por título/categoria.
-- GET /api/v1/categories → Lista categorias disponíveis.
-- GET /api/v1/health → Status da API.
-- GET /api/v1/stats/overview → Estatísticas gerais.
-- GET /api/v1/stats/categories → Estatísticas por categoria.
-- GET /api/v1/books/top-rated → Livros com melhor avaliação.
-- GET /api/v1/books/price-range?min={min}&max={max} → Livros por faixa de preço.
-
-## 📊 Endpoints Detalhados (Diagramas de Sequência)
-
-Todos os endpoints possuem diagramas de sequência em `docs/uml/` descrevendo o fluxo de execução:
-
-### Core
-- [`sequence_list_books.md`](docs/uml/sequence_list_books.md) — GET /books (lista todos os livros)
-- [`sequence_get_book.md`](docs/uml/sequence_get_book.md) — GET /books/{id} (livro específico)
-- [`sequence_search_books.md`](docs/uml/sequence_search_books.md) — GET /books/search (busca por título/categoria)
-- [`sequence_list_categories.md`](docs/uml/sequence_list_categories.md) — GET /categories (lista categorias)
-- [`sequence_health.md`](docs/uml/sequence_health.md) — GET /health (status da API)
-
-### Insights
-- [`sequence_stats_overview.md`](docs/uml/sequence_stats_overview.md) — GET /stats/overview (estatísticas gerais)
-- [`sequence_stats_categories.md`](docs/uml/sequence_stats_categories.md) — GET /stats/categories (estatísticas por categoria)
-- [`sequence_top_rated.md`](docs/uml/sequence_top_rated.md) — GET /books/top-rated (livros melhor avaliados)
-- [`sequence_price_range.md`](docs/uml/sequence_price_range.md) — GET /books/price-range (livros por faixa de preço)
-
-Cada arquivo Markdown contém um diagrama Mermaid que pode ser visualizado diretamente no GitHub ou em ferramentas Mermaid.
-
-## 🚀 Instalação rápida
-
-```bash
-git clone https://github.com/vagnerasilva/mle_tech_chalenge_1.git
-cd mle_tech_chalenge_1
-python -m venv venv
-source venv/bin/activate   # Linux/Mac
-venv\Scripts\activate    # Windows (PowerShell)
-pip install -r requirements.txt
-```
-
----
-
-📜 Licença: MIT
-| ![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg) ![FastAPI](https://img.shields.io/badge/framework-FastAPI-009688?logo=fastapi) ![SQLite](https://img.shields.io/badge/Database-SQLite-003B57?logo=sqlite&logoColor=white) ![MIT License](https://img.shields.io/badge/license-MIT-yellow.svg) |
-|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
-
-# 📚 API Pública para Consulta de Livros – Projeto de Recomendação
-
-## 📌 Descrição
-Este projeto faz parte do Tech Challenge, cujo objetivo é aplicar de forma integrada os conhecimentos adquiridos na fase, desenvolvendo uma solução completa de dados (**web scraping** do site [Books to Scrape](https://books.toscrape.com/)), desde a coleta até a disponibilização via API pública.
+Este projeto faz parte do Tech Challenge, cujo objetivo é aplicar de forma integrada os conhecimentos adquiridos na fase, desenvolvendo uma solução completa de dados (**web scraping** do site [Books to Scrape](https://books.toscrape.com/)), desde a coleta até a disponibilização via API pública.(FastAPI + SQLite)
 
 O desafio consiste em criar uma API pública para consulta de livros, alimentada por dados extraídos através de um sistema automatizado de web scraping do site Books to Scrape.
 
-Como Engenheiro(a) de Machine Learning no contexto do projeto, o primeiro passo é estruturar um pipeline capaz de:
+
 
 - Extrair os dados brutos do site;
 
@@ -127,7 +22,6 @@ A API foi projetada pensando em flexibilidade, boa organização arquitetural e 
 Com isso, este repositório reúne todos os componentes essenciais: o web scraper, a estruturação do pipeline de dados, a API pública, a documentação e o deploy em produção.
 
 ---
-
 ## 🏗️ Arquitetura
 Pipeline de dados:
 1. **Ingestão** → Web Scraping dos livros.  
@@ -138,6 +32,8 @@ Pipeline de dados:
 ![Diagrama Arquitetural](https://drive.google.com/file/d/1mMyyxBYCTEJ7NRglnSQaWxvrKwlm-D3H/view?usp=sharing) <!-- substitua pelo seu diagrama -->
 
 ---
+
+
 ### 📂 Estrutura do Repositório
 
 ```
@@ -188,9 +84,57 @@ Pipeline de dados:
     └── readme.md
 ```
 
-## 📌 Roadmap da execuçäo Projeto – API Pública para Consulta de Livros
 
-Este documento apresenta o planejamento do projeto em formato **roadmap**, dividido em sprints de 3 semanas, com visão estilo **Gantt** e **heatmap visual** para destacar dependências entre tarefas.
+---
+
+## 📡 Endpoints da API (resumo)
+- GET /api/v1/books → Lista todos os livros.
+- GET /api/v1/books/{id} → Detalhes de um livro específico.
+- GET /api/v1/books/search?title={title}&category={category} → Busca por título/categoria.
+- GET /api/v1/categories → Lista categorias disponíveis.
+- GET /api/v1/health → Status da API.
+- GET /api/v1/stats/overview → Estatísticas gerais.
+- GET /api/v1/stats/categories → Estatísticas por categoria.
+- GET /api/v1/books/top-rated → Livros com melhor avaliação.
+- GET /api/v1/books/price-range?min={min}&max={max} → Livros por faixa de preço.
+
+## 📊 Endpoints Detalhados (Diagramas de Sequência)
+
+Todos os endpoints possuem diagramas de sequência em `docs/uml/` descrevendo o fluxo de execução:
+
+### Core
+- [`sequence_list_books.md`](docs/uml/sequence_list_books.md) — GET /books (lista todos os livros)
+- [`sequence_get_book.md`](docs/uml/sequence_get_book.md) — GET /books/{id} (livro específico)
+- [`sequence_search_books.md`](docs/uml/sequence_search_books.md) — GET /books/search (busca por título/categoria)
+- [`sequence_list_categories.md`](docs/uml/sequence_list_categories.md) — GET /categories (lista categorias)
+- [`sequence_health.md`](docs/uml/sequence_health.md) — GET /health (status da API)
+
+### Insights
+- [`sequence_stats_overview.md`](docs/uml/sequence_stats_overview.md) — GET /stats/overview (estatísticas gerais)
+- [`sequence_stats_categories.md`](docs/uml/sequence_stats_categories.md) — GET /stats/categories (estatísticas por categoria)
+- [`sequence_top_rated.md`](docs/uml/sequence_top_rated.md) — GET /books/top-rated (livros melhor avaliados)
+- [`sequence_price_range.md`](docs/uml/sequence_price_range.md) — GET /books/price-range (livros por faixa de preço)
+
+Cada arquivo Markdown contém um diagrama Mermaid que pode ser visualizado diretamente no GitHub ou em ferramentas Mermaid.
+
+## 🚀 Instalação rápida
+
+```bash
+git clone https://github.com/vagnerasilva/mle_tech_chalenge_1.git
+cd mle_tech_chalenge_1
+python -m venv venv
+source venv/bin/activate   # Linux/Mac
+venv\Scripts\activate    # Windows (PowerShell)
+pip install -r requirements.txt
+```
+
+---
+
+---
+
+## 📌 Roadmap da execuçäo Projeto pelo time
+
+Este documento apresenta o planejamento do projeto em formato **roadmap**, dividido em sprints de 3 semanas, com visão estilo **Gantt** e **heatmap visual** para destacar dependências entre tarefas. Bem tb como o Trello de acompanhamento da evolucao do projeto.
 
 ---
 
@@ -217,7 +161,7 @@ Este documento apresenta o planejamento do projeto em formato **roadmap**, divid
 - 🟧 Finalização & Apresentação  
 
 
-- [Trello](https://trello.com/b/7Lrv480a/tech-chalenge-i)
+- [Trello de evolucao do projeto](https://trello.com/b/7Lrv480a/tech-chalenge-i)
 ---
 
 ## 📌 Observações
