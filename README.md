@@ -37,9 +37,12 @@ Pipeline de dados:
 ├── create_db.py
 ├── docs
 │   └── uml
-│       ├── class_diagram.puml
-│       ├── sequence_get_book.puml
-│       └── sequence_scrape_populate.puml
+│       ├── class_diagram.md
+│       ├── class_diagram-1.png
+│       ├── sequence_get_book.md
+│       ├── sequence_get_book-1.png
+│       ├── sequence_scrape_populate.md
+│       └── sequence_scrape_populate-1.png
 └── requirements.txt
 ```
 
@@ -47,14 +50,14 @@ Pipeline de dados:
 
 Os diagramas UML do projeto já estão disponíveis em `docs/uml/`. Eles documentam o modelo de domínio e os principais fluxos (sequência) entre router -> service -> db.
 
-- `docs/uml/class_diagram.puml` — Diagrama de classes (models: Book, Category, Stats).
-- `docs/uml/sequence_get_book.puml` — Sequência: fluxo de GET /books/{id}.
-- `docs/uml/sequence_scrape_populate.puml` — Sequência: scraping e popular o banco de dados.
 
-- `docs/uml/class_diagram.md` — Diagrama de classes em Mermaid (arquivo Markdown com bloco `mermaid`).
-- `docs/uml/sequence_get_book.md` — Sequência (Mermaid) para GET /books/{id}.
-- `docs/uml/sequence_scrape_populate.md` — Sequência (Mermaid) para scraping -> popular DB.
- - `docs/ddl.sql` — Script DDL SQLite (CREATE TABLE para `categories` e `books`).
+Como visualizar os diagramas (Mermaid)
+
+- No GitHub: os arquivos Markdown com blocos Mermaid em `docs/uml/*.md` são renderizados automaticamente em visualização de arquivos.
+- No VSCode: instale uma extensão Mermaid (ex.: `vstirbu.vscode-mermaid-preview` ou `mermaid.live`) e abra os arquivos `docs/uml/*.md` para ver a pré-visualização.
+- Em alternativa, use o site https://mermaid.live/ para colar o conteúdo Mermaid e gerar imagens.
+
+- `docs/ddl.sql` — Script DDL SQLite (CREATE TABLE para `categories` e `books`).
 
 ### DDL (SQLite)
 
@@ -87,24 +90,6 @@ CREATE TABLE IF NOT EXISTS books (
 ```
 
 O script completo está em `docs/ddl.sql`.
-
-Como visualizar os diagramas
-
-- No VSCode: instale a extensão "PlantUML" (jebbs.plantuml) e abra os arquivos `*.puml`. Use a pré-visualização (Preview) para ver o diagrama.
-- Usando o PlantUML (jar):
-
-```bash
-# Baixe o plantuml.jar em https://plantuml.com/download
-java -jar plantuml.jar docs/uml/*.puml
-```
-
-- Usando Docker (recomendado se você já tem Docker):
-
-```bash
-docker run --rm -v "$(pwd)":/workspace plantuml/plantuml -tpng docs/uml/*.puml
-```
-
-Observação: Se quiser que eu gere as imagens PNG a partir dos `.puml` e as adicione ao repositório (`docs/uml/*.png`), posso gerar e commitar esses artefatos.
 
 ---
 
