@@ -290,20 +290,31 @@ uvicorn api.main:app --reload
 - Core
 
 GET /api/v1/books → Lista todos os livros.
+
 GET /api/v1/books/{id} → Detalhes de um livro específico.
+
 GET /api/v1/books/search?title={title}&category={category} → Busca por título/categoria.
+
 GET /api/v1/categories → Lista categorias disponíveis.
+
 GET /api/v1/health → Status da API.
 
 ## Insights (opcionais)
+
 GET /api/v1/stats/overview → Estatísticas gerais.
+
 GET /api/v1/stats/categories → Estatísticas por categoria.
+
 GET /api/v1/books/top-rated → Livros com melhor avaliação.
+
 GET /api/v1/books/price-range?min={min}&max={max} → Livros por faixa de preço.
 
 ## ML-ready (bônus)
+
 GET /api/v1/ml/features → Dados formatados para features.
+
 GET /api/v1/ml/training-data → Dataset para treinamento.
+
 POST /api/v1/ml/predictions → Endpoint para predições.
 
 
