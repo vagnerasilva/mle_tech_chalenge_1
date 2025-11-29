@@ -1,4 +1,4 @@
-# Sequência: Scraping -> Popular DB (Mermaid)
+# Sequência: Scraping -> Popular DB
 
 ```mermaid
 sequenceDiagram
