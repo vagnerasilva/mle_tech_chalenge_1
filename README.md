@@ -4,6 +4,108 @@
 # 📚 API Pública para Consulta de Livros – Projeto de Recomendação
 
 ## 📌 Descrição
+Este projeto faz parte do Tech Challenge: coleta (web scraping), transformação e disponibilização de dados de livros via API RESTful (FastAPI + SQLite).
+
+---
+
+## 🏗️ Arquitetura
+Pipeline de dados:
+1. **Ingestão** → Web Scraping dos livros.  
+2. **Processamento** → Transformação e armazenamento local (SQLite).  
+3. **API** → Endpoints RESTful para consulta.  
+4. **Consumo** → Cientistas de dados e serviços de recomendação.
+
+---
+
+### 📂 Estrutura do Repositório (resumo)
+
+```
+.
+├── README.md
+├── app
+│   ├── app.py
+│   ├── models
+│   │   ├── base.py
+│   │   ├── book.py
+│   │   ├── category.py
+│   │   └── stats.py
+│   ├── routers
+│   │   ├── book.py
+│   │   ├── scraping.py
+│   │   └── stats.py
+│   └── services
+├── create_db.py
+├── docs
+│   └── uml
+│       ├── class_diagram.puml
+│       ├── sequence_get_book.puml
+│       └── sequence_scrape_populate.puml
+└── requirements.txt
+```
+
+## 🧭 UML — Diagramas
+
+Os diagramas UML do projeto já estão disponíveis em `docs/uml/`. Eles documentam o modelo de domínio e os principais fluxos (sequência) entre router -> service -> db.
+
+- `docs/uml/class_diagram.puml` — Diagrama de classes (models: Book, Category, Stats).
+- `docs/uml/sequence_get_book.puml` — Sequência: fluxo de GET /books/{id}.
+- `docs/uml/sequence_scrape_populate.puml` — Sequência: scraping e popular o banco de dados.
+
+- `docs/uml/class_diagram.md` — Diagrama de classes em Mermaid (arquivo Markdown com bloco `mermaid`).
+- `docs/uml/sequence_get_book.md` — Sequência (Mermaid) para GET /books/{id}.
+- `docs/uml/sequence_scrape_populate.md` — Sequência (Mermaid) para scraping -> popular DB.
+
+Como visualizar os diagramas
+
+- No VSCode: instale a extensão "PlantUML" (jebbs.plantuml) e abra os arquivos `*.puml`. Use a pré-visualização (Preview) para ver o diagrama.
+- Usando o PlantUML (jar):
+
+```bash
+# Baixe o plantuml.jar em https://plantuml.com/download
+java -jar plantuml.jar docs/uml/*.puml
+```
+
+- Usando Docker (recomendado se você já tem Docker):
+
+```bash
+docker run --rm -v "$(pwd)":/workspace plantuml/plantuml -tpng docs/uml/*.puml
+```
+
+Observação: Se quiser que eu gere as imagens PNG a partir dos `.puml` e as adicione ao repositório (`docs/uml/*.png`), posso gerar e commitar esses artefatos.
+
+---
+
+## 📡 Endpoints da API (resumo)
+- GET /api/v1/books → Lista todos os livros.
+- GET /api/v1/books/{id} → Detalhes de um livro específico.
+- GET /api/v1/books/search?title={title}&category={category} → Busca por título/categoria.
+- GET /api/v1/categories → Lista categorias disponíveis.
+- GET /api/v1/health → Status da API.
+- GET /api/v1/stats/overview → Estatísticas gerais.
+- GET /api/v1/stats/categories → Estatísticas por categoria.
+- GET /api/v1/books/top-rated → Livros com melhor avaliação.
+- GET /api/v1/books/price-range?min={min}&max={max} → Livros por faixa de preço.
+
+## 🚀 Instalação rápida
+
+```bash
+git clone https://github.com/vagnerasilva/mle_tech_chalenge_1.git
+cd mle_tech_chalenge_1
+python -m venv venv
+source venv/bin/activate   # Linux/Mac
+venv\Scripts\activate    # Windows (PowerShell)
+pip install -r requirements.txt
+```
+
+---
+
+📜 Licença: MIT
+| ![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg) ![FastAPI](https://img.shields.io/badge/framework-FastAPI-009688?logo=fastapi) ![SQLite](https://img.shields.io/badge/Database-SQLite-003B57?logo=sqlite&logoColor=white) ![MIT License](https://img.shields.io/badge/license-MIT-yellow.svg) |
+|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
+
+# 📚 API Pública para Consulta de Livros – Projeto de Recomendação
+
+## 📌 Descrição
 Este projeto faz parte do Tech Challenge, cujo objetivo é aplicar de forma integrada os conhecimentos adquiridos na fase, desenvolvendo uma solução completa de dados (**web scraping** do site [Books to Scrape](https://books.toscrape.com/)), desde a coleta até a disponibilização via API pública.
 
 O desafio consiste em criar uma API pública para consulta de livros, alimentada por dados extraídos através de um sistema automatizado de web scraping do site Books to Scrape.
@@ -155,29 +257,20 @@ uvicorn api.main:app --reload
 - Core
 
 GET /api/v1/books → Lista todos os livros.
-
 GET /api/v1/books/{id} → Detalhes de um livro específico.
-
 GET /api/v1/books/search?title={title}&category={category} → Busca por título/categoria.
-
 GET /api/v1/categories → Lista categorias disponíveis.
-
 GET /api/v1/health → Status da API.
 
 ## Insights (opcionais)
 GET /api/v1/stats/overview → Estatísticas gerais.
-
 GET /api/v1/stats/categories → Estatísticas por categoria.
-
 GET /api/v1/books/top-rated → Livros com melhor avaliação.
-
 GET /api/v1/books/price-range?min={min}&max={max} → Livros por faixa de preço.
 
 ## ML-ready (bônus)
 GET /api/v1/ml/features → Dados formatados para features.
-
 GET /api/v1/ml/training-data → Dataset para treinamento.
-
 POST /api/v1/ml/predictions → Endpoint para predições.
 
 

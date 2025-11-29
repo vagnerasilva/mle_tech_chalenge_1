@@ -1,0 +1,22 @@
+@startuml
+title Fluxo: Scraping -> Popular DB
+actor User
+participant "router.scraping" as Router
+participant "services.scraping" as ScrapingSvc
+participant "services.category" as CategorySvc
+participant "services.book" as BookSvc
+database "SQLite DB" as DB
+
+User -> Router: GET /scraping
+Router -> ScrapingSvc: scrape_books()
+ScrapingSvc -> ScrapingSvc: get_categories()
+ScrapingSvc -> CategorySvc: post_categories(categorias, db)
+CategorySvc -> DB: INSERT categories
+ScrapingSvc -> BookSvc: post_books(infos, db)
+BookSvc -> DB: INSERT books
+DB --> BookSvc: OK
+DB --> CategorySvc: OK
+ScrapingSvc --> Router: retorno
+Router --> User: "Sucesso"
+
+@enduml
