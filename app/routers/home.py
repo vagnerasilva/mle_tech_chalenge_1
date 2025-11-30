@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Request
 from fastapi.responses import HTMLResponse
-from app.utils.constants import API_URL
+from app.utils.constants import logger
 
 router = APIRouter()
 
@@ -10,6 +10,7 @@ async def home(request: Request):
     """
     Rota acessada após o login, contendo informações sobre as rotas da api
     """
+    logger.info("Acessando rota /home para listar rotas disponíveis")
     routes = []
     for route in request.app.routes:
         if hasattr(route, "methods"):
