@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Request
 from fastapi.responses import HTMLResponse
+from app.utils.constants import logger
 
 router = APIRouter()
 
@@ -8,6 +9,7 @@ router = APIRouter()
 async def no_logged_in(request: Request):
     """Rota raiz para primeiro acesso e primeiras instruções
     """
+    logger.info("Acessando rota raiz / para instruções da API")
     return HTMLResponse(content="""
     <!DOCTYPE html>
     <html lang="en">
