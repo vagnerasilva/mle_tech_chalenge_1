@@ -10,7 +10,7 @@ class AuthMiddleware(BaseHTTPMiddleware):
     as chamadas da api e validar se a autenticação foi realizada.
     """
     async def dispatch(self, request, call_next):
-        rotas_publicas = ["/", "/login/", "/login", "/callback/",  "/callback",  "/api/v1/logout/", "/docs"]
+        rotas_publicas = ["/", "/login/", "/login", "/callback/",  "/callback",  "/api/v1/logout/", "/docs", "/docs", "/openapi.json", "/favicon.ico"]
 
         if request.url.path in rotas_publicas:
             return await call_next(request)
