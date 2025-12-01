@@ -1,6 +1,7 @@
 from fastapi import APIRouter
 from fastapi.responses import RedirectResponse
 from app.settings import settings
+from app.utils.constants import logger
 
 router = APIRouter()
 
@@ -9,6 +10,7 @@ router = APIRouter()
 def login():
     """Rota que faz a autenticação e redireciona para o github"""
     # Monta a URL de autorização do GitHub
+    logger.info("Iniciando processo de autenticação no GitHub")
     redirect_url = (
         f"https://github.com/login/oauth/authorize"
         f"?client_id={settings.CLIENT_ID}"
