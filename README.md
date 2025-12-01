@@ -1,4 +1,4 @@
-| ![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg) ![FastAPI](https://img.shields.io/badge/framework-FastAPI-009688?logo=fastapi) ![SQLite](https://img.shields.io/badge/Database-SQLite-003B57?logo=sqlite&logoColor=white) ![Test Coverage](https://img.shields.io/badge/test%20coverage-66%25-green.svg) ![MIT License](https://img.shields.io/badge/license-MIT-yellow.svg) |
+| ![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg) ![FastAPI](https://img.shields.io/badge/framework-FastAPI-009688?logo=fastapi) ![SQLite](https://img.shields.io/badge/Database-SQLite-003B57?logo=sqlite&logoColor=white) ![Test Coverage](https://img.shields.io/badge/test%20coverage-68%25-green.svg) ![MIT License](https://img.shields.io/badge/license-MIT-yellow.svg) |
 |:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
 
 # 📚 API Pública para Consulta de Livros – Projeto de Recomendação

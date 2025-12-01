@@ -4,19 +4,19 @@ Este diretório contém a suite completa de testes para o projeto MLE Tech Chall
 
 ## 📊 Cobertura de Testes
 
-**Cobertura geral: 66%** (28 testes passando)
+**Cobertura geral: 68%** (28 testes passando)
 
 📈 [**Visualizar relatório completo de cobertura**](htmlcov/index.html)
 
-### Cobertura por módulo:
+### Cobertura por módulo (destacadas):
 - Modelos: **100%** ✅
 - Serviços (stats): **100%** ✅
 - Configurações: **100%** ✅
-- Serviços (book): **72%** 
-- Routers (stats): **86%**
-- Routers (book): **77%**
-- App: **82%**
-- Middleware: **43%**
+- App principal: **82%**
+- Serviços (book): **72%**
+- Routers (stats): **73%**
+- Routers (book): **64%**
+- Middleware/auth: **43%**
 
 ## Estrutura dos Testes
 
