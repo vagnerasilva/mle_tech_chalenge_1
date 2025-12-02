@@ -1,6 +1,6 @@
 import json
 import uuid
-from datetime import datetime, UTC
+from datetime import datetime, timezone
 
 from fastapi import Request
 from starlette.responses import StreamingResponse
@@ -29,7 +29,7 @@ def write_log(
         query_params=dict(req.query_params),
         path_params=req.path_params,
         process_time=process_time,
-        created_at=datetime.now(UTC)
+        created_at=datetime.now(timezone.utc)
     )
     db.add(log)
     db.commit()
