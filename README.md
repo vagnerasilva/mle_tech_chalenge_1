@@ -198,12 +198,15 @@ Este documento apresenta o planejamento do projeto em formato **roadmap**, divid
 ---
 
 ## 📌 Observações
-- Cada etapa depende da anterior (ex.: API Core só começa após Scraping).  
-- O roadmap foi pensado para **entregas incrementais**: MVP na Sprint 1 e funcionalidades avançadas na Sprint 2.  
-- Este documento deve ser usado em conjunto com o **Kanban detalhado** para acompanhamento micro das tarefas.  
 
 
-# 🚀 Instalação e Configuração
+A aplicação possui suite completa de testes. Resultado da última execução local:
+
+- **Testes executados:** `pytest tests/` → **36 passed, 4 warnings**
+- **Cobertura de código (total):** **73%** (relatório HTML gerado)
+
+**Relatório HTML de cobertura:** [tests/htmlcov/index.html](tests/htmlcov/index.html)
+    - Abra esse arquivo localmente no seu navegador para visualização interativa.
 
 ### Pré-requisitos
 - Python 3.9+
