@@ -26,12 +26,10 @@ class TestPublicRoutes:
 
 class TestHealthRouterWithoutAuth:
     """Testes para rota /health (nota: requer auth middleware bypass para testes)."""
-    
-    @pytest.mark.skip(reason="Requer autenticação - seria necessário mockar AuthMiddleware ou adicionar à lista pública")
-    def test_health_endpoint_success(self, client):
-        """Testa endpoint de health check."""
-        response = client.get("/health/")
-        
+    def test_health_endpoint_success(self, auth_client):
+        """Testa endpoint de health check com sessão autenticada."""
+        response = auth_client.get("/api/v1/health/", headers={"Authorization": "Bearer test-token"})
+
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
         assert "api_status" in data
@@ -39,12 +37,10 @@ class TestHealthRouterWithoutAuth:
 
 class TestBooksEndpointsWithoutAuth:
     """Testes para endpoints de livros (requerem auth por middleware)."""
-    
-    @pytest.mark.skip(reason="Requer autenticação - seria necessário mockar AuthMiddleware")
-    def test_get_books(self, client, multiple_books):
-        """Testa obtenção de livros."""
-        response = client.get("/books/")
-        
+    def test_get_books(self, auth_client, multiple_books):
+        """Testa obtenção de livros com sessão autenticada."""
+        response = auth_client.get("/api/v1/books/", headers={"Authorization": "Bearer test-token"})
+
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
         assert len(data) == 5
@@ -52,12 +48,10 @@ class TestBooksEndpointsWithoutAuth:
 
 class TestCategoriesEndpointsWithoutAuth:
     """Testes para endpoints de categorias (requerem auth por middleware)."""
-    
-    @pytest.mark.skip(reason="Requer autenticação - seria necessário mockar AuthMiddleware")
-    def test_get_categories(self, client, sample_category):
-        """Testa obtenção de categorias."""
-        response = client.get("/categories/")
-        
+    def test_get_categories(self, auth_client, sample_category):
+        """Testa obtenção de categorias com sessão autenticada."""
+        response = auth_client.get("/api/v1/categories/", headers={"Authorization": "Bearer test-token"})
+
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
         assert len(data) >= 1
@@ -65,12 +59,10 @@ class TestCategoriesEndpointsWithoutAuth:
 
 class TestStatsEndpointsWithoutAuth:
     """Testes para endpoints de estatísticas (requerem auth por middleware)."""
-    
-    @pytest.mark.skip(reason="Requer autenticação - seria necessário mockar AuthMiddleware")
-    def test_get_stats_overview(self, client, multiple_books):
-        """Testa estatísticas gerais."""
-        response = client.get("/stats/overview")
-        
+    def test_get_stats_overview(self, auth_client, multiple_books):
+        """Testa estatísticas gerais com sessão autenticada."""
+        response = auth_client.get("/api/v1/stats/overview", headers={"Authorization": "Bearer test-token"})
+
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
         assert "total_books" in data

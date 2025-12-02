@@ -45,6 +45,82 @@ def client(test_db: Session):
     app.dependency_overrides.clear()
 
 
+@pytest.fixture
+def auth_client(test_db: Session, monkeypatch):
+    """TestClient that bypasses AuthMiddleware by removing it from the app
+    middleware stack and creating a fresh TestClient using the test DB.
+    """
+    from app.app import app as _app
+    from app.dependencies import get_db as _get_db
+
+    # Provide a fake GitHub client to avoid external HTTP calls during tests.
+    class _FakeGitHubUser:
+        def __init__(self, token=None):
+            pass
+
+        def get_authenticated(self):
+            return type("R", (), {"parsed_data": {"login": "test-user"}})()
+
+
+    class _FakeGitHub:
+        def __init__(self, token=None):
+            self.rest = type("R", (), {"users": _FakeGitHubUser()})
+
+    monkeypatch.setattr("app.services.auth_middleware.GitHub", _FakeGitHub)
+
+    # Backup and remove AuthMiddleware from the app.user_middleware list
+    original_user_middleware = list(_app.user_middleware)
+    _app.user_middleware = [m for m in _app.user_middleware if m.cls.__name__ != "AuthMiddleware"]
+
+    # Rebuild the middleware stack so the change takes effect for new TestClient
+    try:
+        _app.build_middleware_stack()
+    except Exception:
+        # If rebuild isn't possible in the current state, continue; the TestClient
+        # will build a fresh stack when instantiated in many cases.
+        pass
+
+    # Override the DB dependency to return the test DB
+    def _override_get_db():
+        return test_db
+
+    _app.dependency_overrides[_get_db] = _override_get_db
+
+    test_client = TestClient(_app)
+
+    # Attempt to find the AuthMiddleware instance in the built middleware stack
+    # and replace its dispatch with a lightweight bypass that injects a
+    # test token into the session. This avoids depending on GitHub OAuth.
+    try:
+        import types
+
+        async def _fake_dispatch(self, request, call_next):
+            request.scope.setdefault("session", {})["access_token"] = "test-token"
+            return await call_next(request)
+
+        node = test_client.app.middleware_stack
+        visited = 0
+        while node and visited < 20:
+            cls_name = getattr(node.__class__, "__name__", "")
+            if cls_name == "AuthMiddleware":
+                # bind the async function to the instance
+                node.dispatch = types.MethodType(_fake_dispatch, node)
+                break
+            node = getattr(node, "app", None)
+            visited += 1
+    except Exception:
+        # best-effort; if this fails we'll still yield the client and tests
+        # will exercise existing behavior
+        pass
+
+    try:
+        yield test_client
+    finally:
+        # restore original middleware list and clear overrides
+        _app.user_middleware = original_user_middleware
+        _app.dependency_overrides.pop(_get_db, None)
+
+
 # Fixture para dados de teste (Category)
 @pytest.fixture
 def sample_category(test_db: Session):
