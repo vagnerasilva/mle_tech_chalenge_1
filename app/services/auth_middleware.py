@@ -15,8 +15,17 @@ class AuthMiddleware(BaseHTTPMiddleware):
         if request.url.path in rotas_publicas:
             return await call_next(request)
 
-        session = request.session
-        access_token = session.get("access_token")
+        # Prefer token from session, but also support `Authorization: Bearer ...`
+        # header to facilitate tests and alternative clients.
+        session = getattr(request, "session", None)
+        access_token = None
+        if session is not None:
+            access_token = session.get("access_token")
+
+        if not access_token:
+            auth_header = request.headers.get("authorization")
+            if auth_header and auth_header.lower().startswith("bearer "):
+                access_token = auth_header.split(None, 1)[1].strip()
 
         if not access_token:
             raise HTTPException(
