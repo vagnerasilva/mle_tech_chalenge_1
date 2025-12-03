@@ -42,38 +42,44 @@ Pipeline de dados:
 ├── api
 │   └── readme.md
 ├── app
+|   ├── db
+│   |   └── books.db
 │   ├── __init__.py
 │   ├── app.py
 │   ├── dependencies.py
+│   ├── .env
+│   ├── settings.py
 │   ├── models
 │   │   ├── __init__.py
 │   │   ├── base.py
 │   │   ├── book.py
 │   │   ├── category.py
-│   │   └── stats.py
+│   │   ├── stats.py
+│   │   └── logs.py
 │   ├── routers
 │   │   ├── __init__.py
 │   │   ├── book.py
 │   │   ├── category.py
 │   │   ├── health.py
 │   │   ├── scraping.py
-│   │   └── stats.py
+│   │   ├── stats.py
+|   |   ├── callback.py
+│   │   ├── home.py
+│   │   ├── login.py
+│   │   ├── logout.py
+│   │   └── nolog.py
 │   ├── services
 │   │   ├── __init__.py
 │   │   ├── book.py
 │   │   ├── category.py
 │   │   ├── scraping.py
-│   │   └── stats.py
+│   │   ├── stats.py
+│   │   ├── auth_middleware.py
+│   │   └── log.py
 │   └── utils
 │       ├── __init__.py
 │       └── constants.py
 ├── create_db.py
-├── db
-│   ├── book_scraping_model
-│   │   ├── __init__.py
-│   │   ├── book.py
-│   │   └── category.py
-│   └── books.db
 ├── docs
 │   ├── arquivo.txt
 │   ├── book_scraping_model.md
@@ -97,6 +103,11 @@ Pipeline de dados:
 - GET /api/v1/stats/categories → Estatísticas por categoria.
 - GET /api/v1/books/top-rated → Livros com melhor avaliação.
 - GET /api/v1/books/price-range?min={min}&max={max} → Livros por faixa de preço.
+- GET /callback → Rota para receber a autenticação
+- GET / → Rota não logada
+- GET /api/v1/home → Rota para home
+- GET /login → Rota para logar
+- GET /api/v1/logout → Rota para sair da api
 
 ## 📊 Endpoints Detalhados (Diagramas de Sequência)
 
