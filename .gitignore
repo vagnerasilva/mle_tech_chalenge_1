@@ -41,7 +41,7 @@ pip-log.txt
 pip-delete-this-directory.txt
 
 # Unit test / coverage reports
-htmlcov/
+
 .tox/
 .nox/
 .coverage
@@ -125,7 +125,6 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.env
 .venv
 env/
 venv/
@@ -175,3 +174,29 @@ poetry.toml
 pyrightconfig.json
 
 # End of https://www.toptal.com/developers/gitignore/api/python
+.vercel
+node_modules/
+package-lock.json
+.env
+.next/
+.DS_Store
+.vscode/
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+coverage
+.nyc_output/
+
+# Local environment variables
+.env.local
+.env.*.local    
+# Next.js build output
+.next/
+
+# Vercel build output
+.vercel/
+
+# Log files

@@ -4,6 +4,7 @@ from app.services import book
 from app.models.book import BookSchema
 from app.dependencies import get_db
 from typing import Optional
+from app.utils.constants import logger
 
 router = APIRouter()
 
@@ -11,7 +12,32 @@ router = APIRouter()
 @router.get("/", response_model=list[BookSchema])
 def lista_books(db: Session = Depends(get_db)):
     """Lista as informações de todos os livros cadastrados"""
+    logger.info("Obtendo lista de todos os livros cadastrados")
     return book.get_books(db)
+
+
+@router.get("/top-rated", response_model=list[BookSchema])
+def obter_melhores_livros(
+    quant: Optional[int] = Query(
+        5,
+        description="Quantidade de livros a serem listados"
+    ),
+    db: Session = Depends(get_db)
+):
+    """Retorna os n livros com melhor avaliação, por padrão, os 5 melhores"""
+    logger.info(f"Obtendo os {quant} livros com melhor avaliação")
+    return book.get_best_book(quant, db)
+
+
+@router.get("/price-range", response_model=list[BookSchema])
+def obter_livros_na_faixa_de_preco(
+    min: float = Query(description="Menor preço"),
+    max: float = Query(description="Maior preço"),
+    db: Session = Depends(get_db)
+):
+    """Obtem os livros que estão em uma determinada faixa de preço"""
+    logger.info(f"Obtendo livros na faixa de preço entre {min} e {max}")
+    return book.get_books_between_prices(db, min, max)
 
 
 @router.get("/search", response_model=list[BookSchema])
@@ -22,6 +48,7 @@ def pesquisar_books(
 ):
     """Realiza busca de livro com base no titulo e/ou categoria
     """
+    logger.info(f"Pesquisando livros com título '{title}' e/ou categoria '{category}'")
     return book.filter_books(db, title, category)
 
 
@@ -33,5 +60,6 @@ def obter_book(
     db: Session = Depends(get_db)
 ):
     """Busca por um livro especifico com base em seu ID"""
-    # VAMOS SEGUIR COM O ID LITERAL OU UPC?
+    logger.info(f"Obtendo informações do livro com ID {book_id}")
     return book.get_book(book_id, db)
+
