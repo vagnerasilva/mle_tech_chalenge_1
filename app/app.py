@@ -11,7 +11,8 @@ from app.routers import (
     logout,
     callback,
     home,
-    nolog
+    nolog,
+    log
 )
 from app.utils.constants import API_PREFIX, logger
 from starlette.middleware.sessions import SessionMiddleware
@@ -84,6 +85,10 @@ async def catch_exceptions_middleware(request: Request, call_next):
 app.include_router(
     nolog.router,
     tags=["no_logged"]
+)
+app.include_router(
+    log.router,
+    tags=["api_logs"]
 )
 app.include_router(
     home.router,

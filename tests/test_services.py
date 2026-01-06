@@ -3,6 +3,7 @@ tests/test_services.py — Testes unitários para serviços de negócio.
 """
 
 import pytest
+
 from app.services.book import (
     get_books,
     get_books_between_prices,
@@ -182,3 +183,4 @@ class TestStatsService:
         assert category_stat is not None
         assert "total_books" in category_stat
         assert "avg_price" in category_stat
+
