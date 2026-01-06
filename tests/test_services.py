@@ -3,8 +3,6 @@ tests/test_services.py — Testes unitários para serviços de negócio.
 """
 
 import pytest
-import unittest
-from unittest.mock import MagicMock, patch
 
 from app.services.book import (
     get_books,
@@ -15,12 +13,6 @@ from app.services.book import (
 )
 from app.services.category import get_categories
 from app.services.stats import get_overview, get_category_overview
-from fastapi import Request
-from starlette.responses import StreamingResponse
-from app.models.logs import ApiLog
-from app.services.log import write_log, get_logs
-import uuid
-import json
 
 
 class TestBookService:
