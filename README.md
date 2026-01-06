@@ -39,8 +39,6 @@ Pipeline de dados:
 ```
 .
 ├── README.md
-├── api
-│   └── readme.md
 ├── app
 |   ├── db
 │   |   └── books.db
@@ -67,6 +65,7 @@ Pipeline de dados:
 │   │   ├── home.py
 │   │   ├── login.py
 │   │   ├── logout.py
+│   │   ├── log.py
 │   │   └── nolog.py
 │   ├── services
 │   │   ├── __init__.py
@@ -81,10 +80,11 @@ Pipeline de dados:
 │       └── constants.py
 ├── create_db.py
 ├── docs
-│   ├── arquivo.txt
 │   ├── book_scraping_model.md
-│   ├── readme.md
-│   └── requirements.txt
+│   ├── db_models.md
+│   ├── ddl.sql
+│   ├── scraping_architecture.drawio
+│   └── uml/
 ├── requirements.txt
 └── tests
     └── readme.md
@@ -108,6 +108,7 @@ Pipeline de dados:
 - GET /api/v1/home → Rota para home
 - GET /login → Rota para logar
 - GET /api/v1/logout → Rota para sair da api
+- GET /api_logs → Informações de performance e logs das chamadas de api.
 
 ## 📊 Endpoints Detalhados (Diagramas de Sequência)
 
@@ -125,6 +126,12 @@ Todos os endpoints possuem diagramas de sequência em `docs/uml/` descrevendo o 
 - [`sequence_stats_categories.md`](docs/uml/sequence_stats_categories.md) — GET /stats/categories (estatísticas por categoria)
 - [`sequence_top_rated.md`](docs/uml/sequence_top_rated.md) — GET /books/top-rated (livros melhor avaliados)
 - [`sequence_price_range.md`](docs/uml/sequence_price_range.md) — GET /books/price-range (livros por faixa de preço)
+
+### Monitoring & Logs
+- [`sequence_get_api_logs.md`](docs/uml/sequence_get_api_logs.md) — GET /api_logs (consulta de logs)
+- [`class_api_log.md`](docs/uml/class_api_log.md) — Diagrama de classes do modelo `ApiLog`
+
+> Visualizações pré-geradas: `docs/uml/sequence_get_api_logs.svg`, `docs/uml/sequence_get_api_logs.png`, `docs/uml/sequence_get_api_logs.html` e `docs/uml/class_api_log.svg`, `docs/uml/class_api_log.png`, `docs/uml/class_api_log.html` — abra os `.html` para exportar as imagens via navegador.
 
 Cada arquivo Markdown contém um diagrama Mermaid que pode ser visualizado diretamente no GitHub ou em ferramentas Mermaid.
 
@@ -211,10 +218,7 @@ Este documento apresenta o planejamento do projeto em formato **roadmap**, divid
 ## 📌 Observações
 
 
-A aplicação possui suite completa de testes. Resultado da última execução local:
-
-- **Testes executados:** `pytest tests/` → **36 passed, 4 warnings**
-- **Cobertura de código (total):** **73%** (relatório HTML gerado)
+A aplicação possui uma suíte de testes. Execute `pytest tests/` localmente para ver o estado atual dos testes e consulte `tests/readme.md` para informações sobre cobertura e relatórios (HTML).
 
 **Relatório HTML de cobertura:** [tests/htmlcov/index.html](tests/htmlcov/index.html)
     - Abra esse arquivo localmente no seu navegador para visualização interativa.
@@ -247,13 +251,14 @@ pip install -r requirements.txt
 
 # Executar scraping
 ```bash
-python scripts/scraping.py
+# Execute o módulo de scraping (do diretório raiz do projeto)
+python -m app.services.scraping
 ```
-
 
 # Rodar API localmente
 ```bash
-uvicorn api.main:app --reload
+# Inicie o servidor de desenvolvimento
+uvicorn app.app:app --reload
 ```
 
 ´´´
@@ -285,12 +290,15 @@ GET /api/v1/books/price-range?min={min}&max={max} → Livros por faixa de preço
 
 ## ML-ready (bônus)
 
-GET /api/v1/ml/features → Dados formatados para features.
+*Observação: esses endpoints são planejados e **não** estão implementados atualmente.*
 
-GET /api/v1/ml/training-data → Dataset para treinamento.
+- GET /api/v1/ml/features → Dados formatados para features. (planejado)
+- GET /api/v1/ml/training-data → Dataset para treinamento. (planejado)
+- POST /api/v1/ml/predictions → Endpoint para predições. (planejado)
 
-POST /api/v1/ml/predictions → Endpoint para predições.
+## Monitoramento & Analytics (bônus)
 
+GET /api_logs → Informações de performance e logs das chamadas de api.
 
 # 🌐 Deploy
 A API está disponível publicamente em: 
