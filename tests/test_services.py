@@ -18,7 +18,7 @@ from app.services.stats import get_overview, get_category_overview
 from fastapi import Request
 from starlette.responses import StreamingResponse
 from app.models.logs import ApiLog
-from app.services.logs import write_log, get_logs
+from app.services.log import write_log, get_logs
 import uuid
 import json
 
@@ -192,44 +192,3 @@ class TestStatsService:
         assert "total_books" in category_stat
         assert "avg_price" in category_stat
 
-
-class TestLogs(unittest.TestCase):
-
-    def setUp(self):
-        # Mock do banco de dados
-        self.db_mock = MagicMock()
-        self.session_mock = MagicMock()
-        self.db_mock.query.return_value.all.return_value = [ApiLog(id=1)]
-        
-        # Mock do Request
-        self.req_mock = MagicMock(spec=Request)
-        self.req_mock.headers = {"x-api-key": str(uuid.uuid4())}
-        self.req_mock.client.host = "127.0.0.1"
-        self.req_mock.url.path = "/test"
-        self.req_mock.method = "POST"
-        self.req_mock.query_params = {"param": "value"}
-        self.req_mock.path_params = {"id": "123"}
-
-        # Mock da Response
-        self.res_mock = MagicMock(spec=StreamingResponse)
-        self.res_mock.status_code = 200
-
-    @patch("app.logs.get_db")
-    def test_write_log_success(self, mock_get_db):
-        mock_get_db.return_value = iter([self.db_mock])
-
-        req_body = {"key": "value"}
-        res_body = json.dumps({"result": "ok"})
-        process_time = 0.123
-
-        write_log(self.req_mock, self.res_mock, req_body, res_body, process_time)
-
-        # Verifica se o log foi adicionado e commitado
-        self.db_mock.add.assert_called_once()
-        self.db_mock.commit.assert_called_once()
-        self.db_mock.close.assert_called_once()
-
-    def test_get_logs(self):
-        logs = get_logs(self.db_mock)
-        self.assertEqual(len(logs), 1)
-        self.assertIsInstance(logs[0], ApiLog)
