@@ -67,6 +67,7 @@ Pipeline de dados:
 │   │   ├── home.py
 │   │   ├── login.py
 │   │   ├── logout.py
+│   │   ├── log.py
 │   │   └── nolog.py
 │   ├── services
 │   │   ├── __init__.py
@@ -108,6 +109,7 @@ Pipeline de dados:
 - GET /api/v1/home → Rota para home
 - GET /login → Rota para logar
 - GET /api/v1/logout → Rota para sair da api
+- GET /api_logs → Informações de performance e logs das chamadas de api.
 
 ## 📊 Endpoints Detalhados (Diagramas de Sequência)
 
@@ -291,6 +293,9 @@ GET /api/v1/ml/training-data → Dataset para treinamento.
 
 POST /api/v1/ml/predictions → Endpoint para predições.
 
+## Monitoramento & Analytics (bônus)
+
+GET /api_logs → Informações de performance e logs das chamadas de api.
 
 # 🌐 Deploy
 A API está disponível publicamente em: 
