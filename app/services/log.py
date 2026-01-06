@@ -4,7 +4,7 @@ from datetime import datetime, timezone
 
 from fastapi import Request
 from starlette.responses import StreamingResponse
-
+from sqlalchemy.orm import Session
 from app.dependencies import get_db
 from app.models.logs import ApiLog
 
@@ -35,3 +35,8 @@ def write_log(
     db.commit()
 
     db.close()
+
+
+def get_logs(db: Session) -> list:
+    logs = db.query(ApiLog).all()
+    return logs
