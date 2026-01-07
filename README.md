@@ -259,6 +259,8 @@ python -m app.services.scraping
 ```bash
 # Inicie o servidor de desenvolvimento
 uvicorn app.app:app --reload
+# Inicie o servidor de desenvolvimento em prod ( render)
+uvicorn app.app:app --host 0.0.0.0 --port 10000 --reload
 ```
 
 ´´´
