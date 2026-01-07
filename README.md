@@ -177,7 +177,7 @@ pytest tests/test_routers.py -v     # Endpoints
 - **test_routers.py** (6 testes): Testes de endpoints públicos (requer configuração adicional para endpoints autenticados)
 - **conftest.py**: Fixtures reutilizáveis (DB mock, TestClient, dados de teste)
 
-📖 [Documentação detalhada](tests/README.md)
+📖 [Documentação detalhada](tests/readme.md)
 
 ---
 
