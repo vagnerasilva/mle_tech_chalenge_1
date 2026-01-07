@@ -226,7 +226,7 @@ A aplicação possui uma suíte de testes. Execute `pytest tests/` localmente pa
 ### Pré-requisitos
 - Python 3.9+
 - Pip ou Poetry
-- Conta em vercel.io
+- Conta em render.com
 
 ### Passos
 bash
@@ -259,6 +259,8 @@ python -m app.services.scraping
 ```bash
 # Inicie o servidor de desenvolvimento
 uvicorn app.app:app --reload
+# Inicie o servidor de desenvolvimento em prod ( render)
+uvicorn app.app:app --host 0.0.0.0 --port 10000 --reload
 ```
 
 ´´´
@@ -303,7 +305,7 @@ GET /api_logs → Informações de performance e logs das chamadas de api.
 # 🌐 Deploy
 A API está disponível publicamente em: 
 
-👉 [https://mle-tech-chalenge-1.vercel.app/](https://mle-tech-chalenge-1.vercel.app/)
+👉 [https://mle-tech-chalenge-1.onrender.com/](https://mle-tech-chalenge-1.onrender.com/)
 
 
 # 🎥 Vídeo de Apresentação
@@ -387,3 +389,4 @@ Dados de /api/v1/stats/* podem ser integrados em ferramentas como Streamlit para
    ┌──────▼───────────┐
    │ Consumers/Apps   │
    └──────────────────┘
+
