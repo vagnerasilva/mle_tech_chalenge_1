@@ -226,7 +226,7 @@ A aplicação possui uma suíte de testes. Execute `pytest tests/` localmente pa
 ### Pré-requisitos
 - Python 3.9+
 - Pip ou Poetry
-- Conta em vercel.io
+- Conta em render.com
 
 ### Passos
 bash
@@ -305,7 +305,7 @@ GET /api_logs → Informações de performance e logs das chamadas de api.
 # 🌐 Deploy
 A API está disponível publicamente em: 
 
-👉 [https://mle-tech-chalenge-1.vercel.app/](https://mle-tech-chalenge-1.vercel.app/)
+👉 [https://mle-tech-chalenge-1.onrender.com/](https://mle-tech-chalenge-1.onrender.com/)
 
 
 # 🎥 Vídeo de Apresentação
