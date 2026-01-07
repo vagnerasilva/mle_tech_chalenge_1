@@ -28,7 +28,7 @@ app = FastAPI(
     description="Documentação da API",
     version="1.0.0",
     servers=[
-        {"url": "https://mle-tech-chalenge-1.vercel.app/", "description": "Produção"},
+        {"url": "https://mle-tech-chalenge-1.onrender.com/", "description": "Produção"},
         {"url": "http://localhost:8000/", "description": "Desenvolvimento"},
     ],
 )
