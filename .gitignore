@@ -196,7 +196,7 @@ coverage
 # Next.js build output
 .next/
 
-# Vercel build output
+#  build output
 .vercel/
 
 # Log files
