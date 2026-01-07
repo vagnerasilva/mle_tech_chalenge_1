@@ -312,9 +312,78 @@ A API está disponível publicamente em:
 
 
 
+# 📑 Plano de Integração com Modelos de Machine Learning
+## Objetivo
+Este plano descreve como a API pública de livros será integrada com modelos de Machine Learning (ML), garantindo que os dados coletados via web scraping sejam disponibilizados de forma escalável, reutilizável e prontos para consumo em sistemas de recomendação, análise estatística e predição.
 
+## Fluxo de Integração com ML
 
-## 📜 Licença
-Este projeto está sob a licença MIT. Consulte o arquivo LICENSE para mais detalhes.
+### Ingestão de Dados
 
+Cientistas de dados acessam /api/v1/ml/training-data para obter as bases de dados em formato JSON para treinamento.
 
+### Preparação de Features
+
+Endpoint /api/v1/ml/features fornece dados já normalizados, facilitando integração direta com frameworks como Scikit-learn, TensorFlow ou PyTorch.
+
+### Treinamento de Modelos
+
+Modelos de recomendação são treinados usando os dados obtidos por requisições e armazenados em catalogos de modelos para versionamento dos modelos.
+
+### Deploy de Modelos
+
+Modelos são expostos como serviços via FastAPI através do endpoint /api/v1/ml/predictions.
+
+### Consumo de Predições
+
+Aplicações externas chamam /api/v1/ml/predictions enviando dados de entrada. API retorna recomendações personalizadas ou insights.
+
+## Cenários de Uso
+- Recomendação de Livros  
+Usuário consulta /api/v1/ml/predictions e recebe sugestões baseadas em categoria e rating.
+
+- Treinamento de Modelos de Classificação  
+Cientistas de dados usam /api/v1/ml/training-data para treinar modelos que classificam livros por popularidade ou faixa de preço.
+
+- Dashboards Analíticos  
+Dados de /api/v1/stats/* podem ser integrados em ferramentas como Streamlit para visualização.
+
+## Escalabilidade e Futuro
+- Banco de Dados: migrar para soluções escaláveis (PostgreSQL + Redis para cache).
+
+- Pipeline de Dados: orquestração com Airflow por exemplo.
+
+- Modelos ML: deploy em nuvem (Google Vertex AI, AWS Sagemaker).
+
+- Monitoramento: logs estruturados + métricas de performance expostas em Streamlit/Grafana.
+
+## Diagrama Visual
+   ┌─────────────┐
+   │ Web Scraping│
+   └──────┬──────┘
+          │
+   ┌──────▼──────┐
+   │ Processing  │
+   └──────┬──────┘
+          │
+   ┌──────▼──────┐
+   │  Database   │
+   └──────┬──────┘
+          │
+   ┌──────▼───────────────┐
+   │     API REST         │
+   │  /books /categories  │
+   │  /ml/features        │
+   │  /ml/training-data   │
+   │  /ml/predictions     │
+   └──────┬───────────────┘
+          │
+   ┌──────▼──────┐
+   │   ML Model  │
+   │ (Recommender│
+   │   System)   │
+   └──────┬──────┘
+          │
+   ┌──────▼───────────┐
+   │ Consumers/Apps   │
+   └──────────────────┘
