@@ -28,11 +28,11 @@ app = FastAPI(
     description="Documentação da API",
     version="1.0.0",
     servers=[
-        {"url": "https://mle-tech-chalenge-1.vercel.app/", "description": "Produção"},
+        {"url": "https://mle-tech-chalenge-1.onrender.com/", "description": "Produção"},
         {"url": "http://localhost:8000/", "description": "Desenvolvimento"},
     ],
 )
-## Importante pra poder funcionar na porta principal do Vercel 
+## Importante pra poder funcionar na porta principal do Render.com
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
