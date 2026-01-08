@@ -322,6 +322,10 @@ Este plano descreve como a API pública de livros será integrada com modelos de
 
 Cientistas de dados acessam /api/v1/ml/training-data para obter as bases de dados em formato JSON para treinamento.
 
+### Análise dos dados
+
+Cientistad de dados usam /api/v1/stats/overview e /api/v1/stats/categories para analisar a distribuição dos dados por rating ou por categoria.
+ 
 ### Preparação de Features
 
 Endpoint /api/v1/ml/features fornece dados já normalizados, facilitando integração direta com frameworks como Scikit-learn, TensorFlow ou PyTorch.
@@ -358,6 +362,7 @@ Dados de /api/v1/stats/* podem ser integrados em ferramentas como Streamlit para
 - Monitoramento: logs estruturados + métricas de performance expostas em Streamlit/Grafana.
 
 ## Diagrama Visual
+
    ┌─────────────┐
    │ Web Scraping│
    └──────┬──────┘
