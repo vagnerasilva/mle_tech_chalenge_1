@@ -364,31 +364,19 @@ Dados de /api/v1/stats/* podem ser integrados em ferramentas como Streamlit para
 - Monitoramento: logs estruturados + métricas de performance expostas em Streamlit/Grafana.
 
 ## Diagrama Visual
-
+```
    ┌─────────────┐
-
    │ Web Scraping│
-
    └──────┬──────┘
-
           │
-
    ┌──────▼──────┐
-
    │ Processing  │
-
    └──────┬──────┘
-
           │
-
    ┌──────▼──────┐
-
    │  Database   │
-
    └──────┬──────┘
-
           │
-          
    ┌──────▼───────────────┐
    │     API REST         │
    │  /books /categories  │
@@ -406,5 +394,5 @@ Dados de /api/v1/stats/* podem ser integrados em ferramentas como Streamlit para
    ┌──────▼───────────┐
    │ Consumers/Apps   │
    └──────────────────┘
-
+```
 
