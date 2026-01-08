@@ -365,33 +365,13 @@ Dados de /api/v1/stats/* podem ser integrados em ferramentas como Streamlit para
 
 ## Diagrama Visual
 
-   ┌─────────────┐
-   │ Web Scraping│
-   └──────┬──────┘
-          │
-   ┌──────▼──────┐
-   │ Processing  │
-   └──────┬──────┘
-          │
-   ┌──────▼──────┐
-   │  Database   │
-   └──────┬──────┘
-          │
-   ┌──────▼───────────────┐
-   │     API REST         │
-   │  /books /categories  │
-   │  /ml/features        │
-   │  /ml/training-data   │
-   │  /ml/predictions     │
-   └──────┬───────────────┘
-          │
-   ┌──────▼──────┐
-   │   ML Model  │
-   │ (Recommender│
-   │   System)   │
-   └──────┬──────┘
-          │
-   ┌──────▼───────────┐
-   │ Consumers/Apps   │
-   └──────────────────┘
+```mermaid
+flowchart TD
+  A[Web Scraping] --> B[Processing]
+  B --> C[Database]
+  C --> D[API REST<br>/books /categories<br>/ml/features<br>/ml/training-data<br>/ml/predictions]
+  D --> E[ML Model<br>(Recommender System)]
+  E --> F[Consumers/Apps]
+```
+
 
