@@ -366,17 +366,29 @@ Dados de /api/v1/stats/* podem ser integrados em ferramentas como Streamlit para
 ## Diagrama Visual
 
    ┌─────────────┐
+
    │ Web Scraping│
+
    └──────┬──────┘
+
           │
+
    ┌──────▼──────┐
+
    │ Processing  │
+
    └──────┬──────┘
+
           │
+
    ┌──────▼──────┐
+
    │  Database   │
+
    └──────┬──────┘
+
           │
+          
    ┌──────▼───────────────┐
    │     API REST         │
    │  /books /categories  │
