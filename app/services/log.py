@@ -10,7 +10,12 @@ from app.models.logs import ApiLog
 
 
 def write_log(
-    req: Request, res: StreamingResponse, req_body: dict, res_body: str, process_time: float):
+    req: Request,
+    res: StreamingResponse, 
+    req_body: dict, 
+    res_body: str, 
+    process_time: float
+    ):
     db = next(get_db())
 
     try:
