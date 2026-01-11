@@ -86,8 +86,9 @@ def test_write_log_creates_entry(test_db, monkeypatch):
     assert last.method == "PUT"
     assert last.status_code == 201
     assert last.ip_address == "10.0.0.1"
-    assert last.request_body == {"value": 42}
-    assert last.response_body == {"result": True}
+    # write_log now persists only the selected fields; bodies are not stored
+    assert last.request_body is None
+    assert last.response_body is None
 
     # Cleanup
     service_db.close()
