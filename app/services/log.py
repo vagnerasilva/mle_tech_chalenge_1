@@ -5,12 +5,17 @@ from datetime import datetime, timezone
 from fastapi import Request
 from starlette.responses import StreamingResponse
 from sqlalchemy.orm import Session
+from sqlalchemy import desc
 from app.dependencies import get_db
 from app.models.logs import ApiLog
 
 
 def write_log(
-    req: Request, res: StreamingResponse, req_body: dict, res_body: str, process_time: float
+    req: Request, 
+    res: StreamingResponse, 
+    req_body: dict, 
+    res_body: str, 
+    process_time: float
 ):
     """Persist only the selected fields to match the streamlit README.
 
@@ -33,7 +38,16 @@ def write_log(
 
 
 def get_logs(db: Session) -> list:
-    logs = db.query(ApiLog).all()
+    #logs = db.query(ApiLog).all()
+    """Busca os últimos 500 logs ordenados do mais recente para o mais antigo"""
+    logs = (
+        db.query(ApiLog)
+        .order_by(desc(ApiLog.created_at))
+        .limit(500)
+        .all() 
+    )
+
+
     result = []
     for l in logs:
         result.append({
