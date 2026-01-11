@@ -58,6 +58,7 @@ Pipeline de dados:
 │   │   ├── __init__.py
 │   │   ├── book.py
 │   │   ├── category.py
+│   │   └── ml.py          # endpoints ML: features, training-data, predictions
 │   │   ├── health.py
 │   │   ├── scraping.py
 │   │   ├── stats.py
@@ -66,6 +67,7 @@ Pipeline de dados:
 │   │   ├── login.py
 │   │   ├── logout.py
 │   │   ├── log.py
+│   │   ├── ml.py           # lógica de features, dataset e predições
 │   │   └── nolog.py
 │   ├── services
 │   │   ├── __init__.py
@@ -79,6 +81,7 @@ Pipeline de dados:
 │       ├── __init__.py
 │       └── constants.py
 ├── create_db.py
+       ├── test_ml_endpoints.py       # testes para os endpoints ML
 ├── docs
 │   ├── book_scraping_model.md
 │   ├── db_models.md
@@ -130,6 +133,11 @@ Todos os endpoints possuem diagramas de sequência em `docs/uml/` descrevendo o 
 ### Monitoring & Logs
 - [`sequence_get_api_logs.md`](docs/uml/sequence_get_api_logs.md) — GET /api_logs (consulta de logs)
 - [`class_api_log.md`](docs/uml/class_api_log.md) — Diagrama de classes do modelo `ApiLog`
+
+### ML-Ready (Bônus)
+- [`sequence_ml_features.md`](docs/uml/sequence_ml_features.md) — GET /api/v1/ml/features (features normalizadas)
+- [`sequence_ml_training_data.md`](docs/uml/sequence_ml_training_data.md) — GET /api/v1/ml/training-data (dataset para treinamento)
+- [`sequence_ml_predictions.md`](docs/uml/sequence_ml_predictions.md) — POST /api/v1/ml/predictions (receber predições)
 
 > Visualizações pré-geradas: `docs/uml/sequence_get_api_logs.svg`, `docs/uml/sequence_get_api_logs.png`, `docs/uml/sequence_get_api_logs.html` e `docs/uml/class_api_log.svg`, `docs/uml/class_api_log.png`, `docs/uml/class_api_log.html` — abra os `.html` para exportar as imagens via navegador.
 
@@ -292,11 +300,11 @@ GET /api/v1/books/price-range?min={min}&max={max} → Livros por faixa de preço
 
 ## ML-ready (bônus)
 
-*Observação: esses endpoints são planejados e **não** estão implementados atualmente.*
+GET /api/v1/ml/features → retorna features normalizadas para ML
 
-- GET /api/v1/ml/features → Dados formatados para features. (planejado)
-- GET /api/v1/ml/training-data → Dataset para treinamento. (planejado)
-- POST /api/v1/ml/predictions → Endpoint para predições. (planejado)
+GET /api/v1/ml/training-data → retorna dataset completo para treinamento
+
+POST /api/v1/ml/predictions → endpoint para receber predições
 
 ## Monitoramento & Analytics (bônus)
 
