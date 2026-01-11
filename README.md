@@ -311,7 +311,7 @@ A API está disponível publicamente em:
 # 🎥 Vídeo de Apresentação
 👉 Link do Vídeo
 
-# Streamlit com statisticas ddo consumo da api 
+# Streamlit com statisticas do consumo da api 
 
 👉 [https://github.com/vagnerasilva/mle_tech_chalenge_1_streamlit/](https://github.com/vagnerasilva/mle_tech_chalenge_1_streamlit/)
 
