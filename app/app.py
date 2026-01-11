@@ -16,6 +16,7 @@ from app.routers import (
 )
 from app.utils.constants import API_PREFIX, logger
 from starlette.middleware.sessions import SessionMiddleware
+from fastapi.middleware.cors import CORSMiddleware
 from app.settings import settings
 from app.services.auth_middleware import AuthMiddleware
 import time
@@ -31,6 +32,14 @@ app = FastAPI(
         {"url": "https://mle-tech-chalenge-1.onrender.com/", "description": "Produção"},
         {"url": "http://localhost:8000/", "description": "Desenvolvimento"},
     ],
+)
+# Enable CORS so browser clients (e.g. Streamlit) can call the API in development
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:8501", "http://localhost:3000", "http://localhost:8000", "http://127.0.0.1:8501"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 ## Importante pra poder funcionar na porta principal do Render.com
 if __name__ == "__main__":
@@ -67,13 +76,15 @@ async def catch_exceptions_middleware(request: Request, call_next):
             res_body = None
 
         # Add the background task to the response object to queue the job
-        response.background = BackgroundTask(
-            write_log, 
-            request, 
-            response, 
-            req_body, 
-            res_body, 
-            process_time
+        # Skip logging for the `/api_logs` endpoint to avoid recording retrievals
+        if not request.url.path.startswith("/api_logs"):
+            response.background = BackgroundTask(
+                write_log,
+                request,
+                response,
+                req_body,
+                res_body,
+                process_time
             )
         return response
     except SQLAlchemyError as e:
