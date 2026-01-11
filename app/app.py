@@ -67,7 +67,16 @@ async def catch_exceptions_middleware(request: Request, call_next):
             res_body = None
 
         # Add the background task to the response object to queue the job
-        response.background = BackgroundTask(write_log, request, response, req_body, res_body, process_time)
+        # Skip logging for the `/api_logs` endpoint to avoid recording retrievals
+        if not request.url.path.startswith("/api_logs"):
+            response.background = BackgroundTask(
+                write_log,
+                request,
+                response,
+                req_body,
+                res_body,
+                process_time,
+            )
         return response
     except SQLAlchemyError as e:
         logger.error(f"Erro no banco de dados: {e}")

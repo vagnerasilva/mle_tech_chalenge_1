@@ -10,33 +10,39 @@ from app.models.logs import ApiLog
 
 
 def write_log(
-    req: Request, res: StreamingResponse, req_body: dict, res_body: str, process_time: float):
+    req: Request, res: StreamingResponse, req_body: dict, res_body: str, process_time: float
+):
+    """Persist only the selected fields to match the streamlit README.
+
+    Stored fields: ip_address, path, method, status_code, process_time, created_at
+    """
     db = next(get_db())
-
     try:
-        res_body = json.loads(res_body)
-    except Exception:
-        res_body = None
-
-    log = ApiLog(
-        api_key=uuid.UUID(req.headers.get("x-api-key")) if req.headers.get("x-api-key") else None,
-        ip_address=req.client.host,
-        path=req.url.path,
-        method=req.method,
-        status_code=res.status_code,
-        request_body=req_body,
-        response_body=res_body,
-        query_params=dict(req.query_params),
-        path_params=req.path_params,
-        process_time=process_time,
-        created_at=datetime.now(timezone.utc)
-    )
-    db.add(log)
-    db.commit()
-
-    db.close()
+        log = ApiLog(
+            ip_address=req.client.host if req.client else None,
+            path=req.url.path,
+            method=req.method,
+            status_code=res.status_code,
+            process_time=process_time,
+            created_at=datetime.now(timezone.utc),
+        )
+        db.add(log)
+        db.commit()
+    finally:
+        db.close()
 
 
 def get_logs(db: Session) -> list:
     logs = db.query(ApiLog).all()
-    return logs
+    result = []
+    for l in logs:
+        result.append({
+            "id": l.id,
+            "method": l.method,
+            "path": l.path,
+            "status_code": l.status_code,
+            "process_time": l.process_time,
+            "ip_address": l.ip_address,
+            "created_at": l.created_at.isoformat() if l.created_at else None,
+        })
+    return result
