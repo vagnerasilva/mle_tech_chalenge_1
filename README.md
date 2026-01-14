@@ -321,9 +321,7 @@ Pipeline de dados:
 │       └── constants.py
 ├── create_db.py
 ├── docs
-│   ├── book_scraping_model.md
 │   ├── db_models.md
-│   ├── ddl.sql
 │   ├── scraping_architecture.drawio
 │   └── uml/
 │       ├── README.md
