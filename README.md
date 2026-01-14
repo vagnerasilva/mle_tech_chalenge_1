@@ -528,7 +528,8 @@ uvicorn app.app:app --host 0.0.0.0 --port 10000 --reload
 
 ´´´
 
-## Testes de response/requests - FAAAAAALTA POR AQUI
+## Testes de response/requests 
+Acesse [aqui](https://docs.google.com/document/d/1EdPdVxfSUCTN6JQGMQNRcEKVdiMOuGGmKpJxedEBpNM/edit?tab=t.0#heading=h.1b5y9g8r5jym)
 
 
 ## 🏆 Boas Práticas
