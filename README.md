@@ -583,13 +583,21 @@ A modularização facilita:
 #### Logs Estruturados
 
 Utilizados para:
+# Streamlit com statisticas do consumo da api 
+👉 Link Monitoramento: [Streamlit](https://mle-tech-chalenge-1-streamlit-qoud.onrender.com/)
+
+![alt text](./docs/streamlit.png)
 
 - Registro de erros e stack traces
 - Execução de endpoints
 - Monitoramento de performance
 - Rastreamento de eventos importantes
 
----
+👉 repositorio do streamlit de monitoramento: [https://github.com/vagnerasilva/mle_tech_chalenge_1_streamlit/](https://github.com/vagnerasilva/mle_tech_chalenge_1_streamlit/)
+
+# 📑 Plano de Integração com Modelos de Machine Learning
+## Objetivo
+Este plano descreve como a API pública de livros será integrada com modelos de Machine Learning (ML), garantindo que os dados coletados via web scraping sejam disponibilizados de forma escalável, reutilizável e prontos para consumo em sistemas de recomendação, análise estatística e predição.
 
 ### 🔐 Segurança
 
