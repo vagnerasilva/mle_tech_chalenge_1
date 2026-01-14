@@ -37,7 +37,7 @@ A organização dos códigos da API se dá da seguinte forma:
 - As funções que integram com o banco de dados ficam no diretório `app/services` e são chamadas nas respectivas funções de criação do endpoint em `app/routers`.
 
 ### 📡 Endpoints da API
-- Core
+#### Core
 
 GET /api/v1/scraping → Realiza o scraping e resgistro no banco de dados.
 
