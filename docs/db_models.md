@@ -85,8 +85,6 @@ CREATE TABLE books (
   - `path TEXT NOT NULL`
   - `method TEXT NOT NULL`
   - `status_code INTEGER NOT NULL`
-  - `request_body JSON`
-  - `response_body JSON`
   - `query_params JSON`
   - `path_params JSON`
   - `process_time REAL NOT NULL`
@@ -103,8 +101,6 @@ CREATE TABLE api_logs (
   path TEXT NOT NULL,
   method TEXT NOT NULL,
   status_code INTEGER NOT NULL,
-  request_body JSON,
-  response_body JSON,
   query_params JSON,
   path_params JSON,
   process_time REAL NOT NULL,
