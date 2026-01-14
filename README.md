@@ -104,9 +104,49 @@ Todos os endpoints possuem diagramas de sequência em `docs/uml/` descrevendo o 
 - [`sequence_top_rated.md`](docs/uml/sequence_top_rated.md) — GET /books/top-rated (livros melhor avaliados)
 - [`sequence_price_range.md`](docs/uml/sequence_price_range.md) — GET /books/price-range (livros por faixa de preço)
 
+### Documentação da API (Swagger) 
+O próprio FastAPI monta a documentação no [link](https://mle-tech-chalenge-1.onrender.com/docs) usando as docstrings das funções de cada rota.
+
+### 🔄 Versionamento da API
+
+Esta API utiliza versionamento por URL, identificado pelo prefixo /api/v1.
+
+O versionamento explícito permite:
+
+- Evoluir a API sem quebrar integrações existentes
+- Garantir compatibilidade para consumidores antigos
+- Facilitar a manutenção e a introdução de novas funcionalidades
+
+#### Estratégia adotada
+
+- /api/v1
+
+       Primeira versão estável da API, contendo os endpoints core de consulta de livros, categorias, scraping, estatísticas e monitoramento.
+
+- Novas versões (v2, v3, …)
+Serão criadas quando houver:
+
+       - Mudanças incompatíveis no formato de resposta (breaking changes)
+       - Alterações significativas na lógica dos endpoints
+       - Introdução de novos fluxos, como autenticação diferente ou endpoints de ML em produção
+
+#### Compatibilidade
+
+- Versões antigas da API continuarão disponíveis por um período determinado, evitando impacto imediato nos consumidores.
+- Correções de bugs e melhorias que não quebram compatibilidade poderão ser aplicadas dentro da mesma versão (v1).
+
+#### Benefícios para Machine Learning
+
+O versionamento é especialmente importante para cenários de Machine Learning, pois garante:
+
+       - Reprodutibilidade de experimentos
+       - Estabilidade nos dados consumidos por pipelines de treino
+       - Segurança na evolução de features e datasets ao longo do tempo
+
 ## Autenticação
-A autenticação da API aproveita o gerenciador de acesso do GitHub por meio da biblioteca `githubkit`, como pode ser visto em `app/services/auth_middleware.py`. Algumas rotas, como docs, api_logs são mantidas públicas estratégicamente falando para permitir previa visualização das funcionalidades da api e possibilitar integração com o streamlit de monitoramento.
-Para isso foi preciso criar uma aplicação OAuth App no GitHub, onde obtemos o Client ID e o Client Secret e indicamos a url da home e a url de callback (o arquivo `app/.env` contêm as credenciais usadas na integração da nossa api com o GitHub e é usada a partir da classe Settings de `api/settings.py`)
+A autenticação da API aproveita o gerenciador de acesso do GitHub por meio da biblioteca `githubkit`, como pode ser visto em `app/services/auth_middleware.py`. Isso é interessante visto que não precisamos gerenciar os usuários.
+Algumas rotas, como docs, api_logs são mantidas públicas estratégicamente falando para permitir previa visualização das funcionalidades da api e possibilitar integração com o streamlit de monitoramento.
+Para isso foi preciso criar uma aplicação OAuth App no GitHub, onde obtemos o Client ID e o Client Secret e indicamos a url da home e a url de callback (o arquivo `app/.env` contêm as credenciais usadas na integração da nossa api com o GitHub e é usada a partir da classe Settings de `api/settings.py`. São elas: CLIENT_ID, CLIENT_SECRET, CallBack_URL e SECRET_KEY)
 
 ### Autenticação produtiva
 Ao acessar nosso [site](https://mle-tech-chalenge-1.onrender.com/), a autenticação é bastante intuitiva, você apenas precisa ter uma conta no github e o restante será como uma autenticação normal.
@@ -221,14 +261,67 @@ Cientistas de dados usam /api/v1/ml/training-data para treinar modelos que class
 - Dashboards Analíticos  
 Dados de /api/v1/stats/* podem ser integrados em ferramentas como Streamlit para visualização.
 
-## Escalabilidade e Futuro
-- Banco de Dados: migrar para soluções escaláveis (PostgreSQL + Redis para cache).
+## ⚠️ Limitações Atuais e Próximos Passos
 
-- Pipeline de Dados: orquestração com Airflow por exemplo.
+Embora a solução atenda plenamente aos objetivos propostos para esta fase do Tech Challenge, algumas limitações técnicas e funcionais foram identificadas e já estão mapeadas como próximos passos de evolução do projeto.
 
-- Desenvolvimento de um modelo de recomendação.
+### Limitações Atuais
 
-- Modelos ML: deploy em nuvem (Google Vertex AI, AWS Sagemaker).
+- Dependência da estrutura do site fonte
+
+O processo de web scraping depende diretamente da estrutura HTML do site Books to Scrape. Alterações no layout ou nos seletores podem exigir ajustes no script de extração.
+
+- Banco de dados SQLite
+A aplicação utiliza SQLite por simplicidade e facilidade de setup local. Essa solução não é ideal para cenários de alta concorrência ou grandes volumes de dados.
+
+- Scraping síncrono
+O scraping é executado de forma síncrona, podendo impactar o tempo de resposta da API quando acionado em produção.
+
+- Endpoints de Machine Learning não implementados
+Os endpoints ML-ready (/ml/features, /ml/training-data, /ml/predictions) estão documentados e planejados, mas ainda não fazem parte da versão atual da API.
+
+- Ausência de cache
+Não há mecanismo de cache para respostas frequentes, o que pode gerar leituras repetidas do banco de dados.
+
+### Próximos Passos (Evolução do Projeto)
+
+- Migração do banco de dados
+       - Substituir o SQLite por um banco relacional mais robusto, como PostgreSQL, com uso de Redis para cache de consultas frequentes.
+
+- Scraping assíncrono e agendado
+       - Implementar scraping assíncrono e/ou agendado utilizando filas (ex.: Celery, RQ ou SQS) ou orquestradores como Airflow.
+
+- Implementação completa do pipeline ML
+
+       - Disponibilizar datasets prontos para treino
+
+       - Criar um modelo inicial de recomendação de livros
+
+       - Versionar modelos e features
+
+- Melhorias de segurança
+
+       - Rate limiting
+
+       - Controle de permissões por perfil
+
+       - Tokens com expiração e refresh automatizado
+
+- Observabilidade avançada
+
+       - Métricas de performance (latência, throughput)
+
+       - Alertas automatizados
+
+       - Dashboards mais completos de monitoramento
+
+- Escalabilidade e Cloud-Native
+
+       - Containerização com Docker
+
+       - Deploy com CI/CD
+
+       - Suporte a múltiplas versões da API
 
 ## Diagrama Visual
 ```
@@ -442,6 +535,115 @@ uvicorn app.app:app --host 0.0.0.0 --port 10000 --reload
 ```
 
 ´´´
+
+## Testes de response/requests - FAAAAAALTA POR AQUI
+
+
+## 🏆 Boas Práticas
+
+### 🏗️ Organização e Arquitetura
+
+#### Separação de Responsabilidades por Camadas
+
+- **Routers**: Definição dos endpoints e contratos da API
+- **Services**: Regras de negócio e integração com banco de dados
+- **Models**: Definição das entidades e schemas
+- **Utils**: Constantes e funções auxiliares
+
+#### Estrutura de Projeto Modular
+
+A modularização facilita:
+
+- Testes automatizados
+- Reutilização de código
+- Evolução incremental do sistema
+
+---
+
+### 🌐 Boas Práticas em APIs REST
+
+- Uso consistente de verbos HTTP (GET, POST, etc.)
+- Endpoints nomeados de forma semântica e previsível
+- Versionamento explícito via URL (`/api/v1`)
+- Respostas padronizadas em formato JSON
+- Uso adequado de códigos de status HTTP (200, 400, 401, 404, 500)
+
+---
+
+### 📝 Qualidade de Código
+
+- Código escrito seguindo padrões da **PEP 8**
+- Funções com responsabilidades bem definidas
+- Evita duplicação de lógica (**DRY** – Don't Repeat Yourself)
+- Comentários objetivos apenas quando necessário
+- Tipagem explícita sempre que aplicável
+
+---
+
+### ⚠️ Tratamento de Erros e Logs
+
+#### Centralização de Exceções
+
+- Tratamento centralizado via middleware (`catch_exceptions_middleware`)
+- Mensagens de erro claras, sem expor informações sensíveis
+
+#### Logs Estruturados
+
+Utilizados para:
+
+- Registro de erros e stack traces
+- Execução de endpoints
+- Monitoramento de performance
+- Rastreamento de eventos importantes
+
+---
+
+### 🔐 Segurança
+
+- Uso de autenticação para proteger rotas sensíveis
+- Separação entre rotas públicas e rotas autenticadas
+- Variáveis sensíveis isoladas em arquivos de ambiente (`.env`)
+- Evita hardcode de segredos no código-fonte
+- Integração com OAuth2 via GitHub para autenticação
+
+---
+
+### 🧪 Testes Automatizados
+
+#### Cobertura de Testes
+
+A suíte de testes abrange:
+
+- Models
+- Services
+- Routers
+- Middleware de autenticação
+
+#### Ferramentas e Relatórios
+
+- Uso de **pytest** para execução e organização dos testes
+- Relatório de cobertura para acompanhamento da qualidade
+- Cobertura atual: **70%** (confira [tests/htmlcov/index.html](tests/htmlcov/index.html))
+
+---
+
+### 🤖 Preparação para Machine Learning (ML-Ready)
+
+- Dados estruturados e normalizados no banco
+- Endpoints planejados para:
+  - Extração de datasets
+  - Geração de features
+  - Consumo por pipelines de ML
+- Foco em reprodutibilidade e versionamento dos dados
+
+---
+
+### 📊 Observabilidade e Monitoramento
+
+- Registro de logs de todas as requisições
+- Persistência de métricas básicas no banco de dados
+- Dashboard externo para visualização de uso e performance
+- Endpoint dedicado `/api_logs` para consulta de logs
 
 # 🎥 Vídeo de Apresentação
 👉 Link do Vídeo
