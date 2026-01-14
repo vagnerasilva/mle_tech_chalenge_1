@@ -36,32 +36,60 @@ A organização dos códigos da API se dá da seguinte forma:
 - O diretório `api/routers` contêm os arquivos de cada domínio de rotas existente na api, ou seja, o arquivo `book.py`, por exemplo, contêm os códigos responsáveis por criar cada uma das rotas de book.
 - As funções que integram com o banco de dados ficam no diretório `app/services` e são chamadas nas respectivas funções de criação do endpoint em `app/routers`.
 
-### 📡 Endpoints da API (resumo)
-- GET /api/v1/scraping → Realiza o scraping e resgistro no banco de dados.
-- GET /api/v1/books → Lista todos os livros.
-- GET /api/v1/books/{id} → Detalhes de um livro específico.
-- GET /api/v1/books/search?title={title}&category={category} → Busca por título/categoria.
-- GET /api/v1/categories → Lista categorias disponíveis.
-- GET /api/v1/health → Status da API.
-- GET /api/v1/stats/overview → Estatísticas gerais.
-- GET /api/v1/stats/categories → Estatísticas por categoria.
-- GET /api/v1/books/top-rated → Livros com melhor avaliação.
-- GET /api/v1/books/price-range?min={min}&max={max} → Livros por faixa de preço.
-- GET /callback → Rota para receber a autenticação
-- GET / → Rota não logada
-- GET /api/v1/home → Rota para home
-- GET /login → Rota para logar
-- GET /api/v1/logout → Rota para sair da api
-- GET /api_logs → Informações de performance e logs das chamadas de api.
-- GET /api/v1/ml/features → Dados formatados para features. (planejado)
-- GET /api/v1/ml/training-data → Dataset para treinamento. (planejado)
-- POST /api/v1/ml/predictions → Endpoint para predições. (planejado)
+### 📡 Endpoints da API
+- Core
+GET /api/v1/scraping → Realiza o scraping e resgistro no banco de dados.
+
+GET /api/v1/books → Lista todos os livros.
+
+GET /api/v1/books/{id} → Detalhes de um livro específico.
+
+GET /api/v1/books/search?title={title}&category={category} → Busca por título/categoria.
+
+GET /api/v1/categories → Lista categorias disponíveis.
+
+GET /api/v1/health → Status da API.
+
+GET /callback → Rota para receber a autenticação
+
+GET / → Rota não logada
+
+GET /api/v1/home → Rota para home
+
+GET /login → Rota para logar
+
+GET /api/v1/logout → Rota para sair da api
+
+#### Insights (opcionais)
+
+GET /api/v1/stats/overview → Estatísticas gerais.
+
+GET /api/v1/stats/categories → Estatísticas por categoria.
+
+GET /api/v1/books/top-rated → Livros com melhor avaliação.
+
+GET /api/v1/books/price-range?min={min}&max={max} → Livros por faixa de preço.
+
+#### ML-ready (bônus)
+
+*Observação: esses endpoints são planejados e **não** estão implementados atualmente.*
+
+GET /api/v1/ml/features → Dados formatados para features. (planejado)
+
+GET /api/v1/ml/training-data → Dataset para treinamento. (planejado)
+
+POST /api/v1/ml/predictions → Endpoint para predições. (planejado)
+
+#### Monitoramento & Analytics (bônus)
+
+GET /api_logs → Informações de performance e logs das chamadas de api.
+
 
 ### 📊 Endpoints Detalhados (Diagramas de Sequência)
 
 Todos os endpoints possuem diagramas de sequência em `docs/uml/` descrevendo o fluxo de execução:
 
-### Core
+#### Core
 - [`sequence_scrape_populate.md`] (docs/uml/sequence_scrape_populate.md) — GET /scraping (scrape as informações do site)
 - [`sequence_list_books.md`](docs/uml/sequence_list_books.md) — GET /books (lista todos os livros)
 - [`sequence_get_book.md`](docs/uml/sequence_get_book.md) — GET /books/{id} (livro específico)
@@ -69,14 +97,14 @@ Todos os endpoints possuem diagramas de sequência em `docs/uml/` descrevendo o 
 - [`sequence_list_categories.md`](docs/uml/sequence_list_categories.md) — GET /categories (lista categorias)
 - [`sequence_health.md`](docs/uml/sequence_health.md) — GET /health (status da API)
 
-### Insights
+#### Insights
 - [`sequence_stats_overview.md`](docs/uml/sequence_stats_overview.md) — GET /stats/overview (estatísticas gerais)
 - [`sequence_stats_categories.md`](docs/uml/sequence_stats_categories.md) — GET /stats/categories (estatísticas por categoria)
 - [`sequence_top_rated.md`](docs/uml/sequence_top_rated.md) — GET /books/top-rated (livros melhor avaliados)
 - [`sequence_price_range.md`](docs/uml/sequence_price_range.md) — GET /books/price-range (livros por faixa de preço)
 
 ## Autenticação
-A autenticação da API aproveita o provedor de identidade do GitHub por meio da biblioteca `githubkit`, como pode ser visto em `app/services/auth_middleware.py`. Algumas rotas, como docs, api_logs são mantidas públicas estratégicamente falando para permitir previa visualização das funcionalidades da api e possibilitar integração com o streamlit de monitoramento.
+A autenticação da API aproveita o gerenciador de acesso do GitHub por meio da biblioteca `githubkit`, como pode ser visto em `app/services/auth_middleware.py`. Algumas rotas, como docs, api_logs são mantidas públicas estratégicamente falando para permitir previa visualização das funcionalidades da api e possibilitar integração com o streamlit de monitoramento.
 Para isso foi preciso criar uma aplicação OAuth App no GitHub, onde obtemos o Client ID e o Client Secret e indicamos a url da home e a url de callback (o arquivo `app/.env` contêm as credenciais usadas na integração da nossa api com o GitHub e é usada a partir da classe Settings de `api/settings.py`)
 
 ### Autenticação produtiva
@@ -139,260 +167,20 @@ Para monitorar a api, nós temos a captura de logs de cada rota também em `catc
 
 O dashboard de monitoramento está em https://mle-tech-chalenge-1-streamlit-qoud.onrender.com/
 
-Abaixo dois diagramas referentes aos logs.
+Abaixo, dois diagramas referentes aos logs.
 - [`sequence_get_api_logs.md`](docs/uml/sequence_get_api_logs.md) — GET /api_logs (consulta de logs)
 - [`class_api_log.md`](docs/uml/class_api_log.md) — Diagrama de classes do modelo `ApiLog`
 
----
-## 🏗️ Arquitetura
-Pipeline de dados:
-1. **Ingestão** → Web Scraping dos livros.  
-2. **Processamento** → Transformação e armazenamento em CSV.  
-3. **API** → Disponibilização dos dados via endpoints RESTful.  
-4. **Consumo** → Cientistas de dados e serviços de recomendação.  
 
-👉 [Diagrama Arquitetural link](https://drive.google.com/file/d/1mMyyxBYCTEJ7NRglnSQaWxvrKwlm-D3H/view?usp=sharing) <!-- substitua pelo seu diagrama -->
+## 🌐 Deploy
 
----
+INCLUIR EXPLICAÇÃO DO RENDER
 
-
-### 📂 Estrutura do Repositório
-
-```
-.
-├── README.md
-├── app
-|   ├── db
-│   |   └── books.db
-│   ├── __init__.py
-│   ├── app.py
-│   ├── dependencies.py
-│   ├── .env
-│   ├── settings.py
-│   ├── models
-│   │   ├── __init__.py
-│   │   ├── base.py
-│   │   ├── book.py
-│   │   ├── category.py
-│   │   ├── stats.py
-│   │   └── logs.py
-│   ├── routers
-│   │   ├── __init__.py
-│   │   ├── book.py
-│   │   ├── category.py
-│   │   ├── health.py
-│   │   ├── scraping.py
-│   │   ├── stats.py
-|   |   ├── callback.py
-│   │   ├── home.py
-│   │   ├── login.py
-│   │   ├── logout.py
-│   │   ├── log.py
-│   │   └── nolog.py
-│   ├── services
-│   │   ├── __init__.py
-│   │   ├── book.py
-│   │   ├── category.py
-│   │   ├── scraping.py
-│   │   ├── stats.py
-│   │   ├── auth_middleware.py
-│   │   └── log.py
-│   └── utils
-│       ├── __init__.py
-│       └── constants.py
-├── create_db.py
-├── docs
-│   ├── book_scraping_model.md
-│   ├── db_models.md
-│   ├── ddl.sql
-│   ├── scraping_architecture.drawio
-│   └── uml/
-├── requirements.txt
-└── tests
-    └── readme.md
-```
-
-
-## 🚀 Instalação rápida
-
-```bash
-git clone https://github.com/vagnerasilva/mle_tech_chalenge_1.git
-cd mle_tech_chalenge_1
-python -m venv venv
-source venv/bin/activate   # Linux/Mac
-venv\Scripts\activate    # Windows (PowerShell)
-pip install -r requirements.txt
-```
-
----
-
-## 🧪 Testes Unitários
-
-A aplicação possui suite completa de testes com **66% de cobertura** de código.
-
-### Instalação de dependências de teste
-```bash
-pip install -r requirements-dev.txt
-```
-
-### Executar testes
-```bash
-# Todos os testes
-pytest tests/ -v
-
-# Com cobertura de código
-pytest tests/ --cov=app --cov-report=html
-
-# Testes específicos
-pytest tests/test_models.py -v      # Modelos (100% cobertura)
-pytest tests/test_services.py -v    # Serviços (72% cobertura)
-pytest tests/test_routers.py -v     # Endpoints
-```
-
-### Estrutura dos testes
-- **test_models.py** (10 testes): Validação de modelos SQLAlchemy e schemas Pydantic
-- **test_services.py** (18 testes): Testes da lógica de negócio (book, category, stats services)
-- **test_routers.py** (6 testes): Testes de endpoints públicos (requer configuração adicional para endpoints autenticados)
-- **conftest.py**: Fixtures reutilizáveis (DB mock, TestClient, dados de teste)
-
-📖 [Documentação detalhada](tests/readme.md)
-
----
-
----
-
-## 📌 Roadmap da execuçäo Projeto pelo time
-
-Este documento apresenta o planejamento do projeto em formato **roadmap**, dividido em sprints de 3 semanas, com visão estilo **Gantt** e **heatmap visual** para destacar dependências entre tarefas. Bem tb como o Trello de acompanhamento da evolucao do projeto.
-
----
-
-
-## 📊 Roadmap por Semana – Projeto API Pública para Consulta de Livros
-
-| Tarefa                          | Semana 1 | Semana 2 | Semana 3 | Semana 4 | Semana 5 | Semana 6 |
-|---------------------------------|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|
-| Setup & Scraping                | 🟩🟩🟩     |          |          |          |          |          |
-| API Core                        |          | → 🟦🟦🟦   |          |          |          |          |
-| Deploy & Arquitetura            |          |          | → 🟨🟨🟨   |          |          |          |
-| Insights & Estatísticas         |          |          |          | → 🟪🟪🟪   |          |          |
-| Bônus & ML-ready                |          |          |          |          | → 🟥🟥🟥   |          |
-| Finalização & Apresentação      |          |          |          |          |          | → 🟧🟧🟧   |
-
----
-
-## 🎨 Legenda de cores
-- 🟩 Setup & Scraping  
-- 🟦 API Core  
-- 🟨 Deploy & Arquitetura  
-- 🟪 Insights & Estatísticas  
-- 🟥 Bônus & ML-ready  
-- 🟧 Finalização & Apresentação  
-
-
-- [Trello de evolucao do projeto](https://trello.com/b/7Lrv480a/tech-chalenge-i)
----
-
-## 📌 Observações
-
-
-A aplicação possui uma suíte de testes. Execute `pytest tests/` localmente para ver o estado atual dos testes e consulte `tests/readme.md` para informações sobre cobertura e relatórios (HTML).
-
-**Relatório HTML de cobertura:** [tests/htmlcov/index.html](tests/htmlcov/index.html)
-    - Abra esse arquivo localmente no seu navegador para visualização interativa.
-
-### Pré-requisitos
-- Python 3.9+
-- Pip ou Poetry
-- Conta em render.com
-
-### Passos
-bash
-# Clonar repositório
-```bash
-git clone https://github.com/vagnerasilva/mle_tech_chalenge_1.git
-cd seu-repo
-```
-# Criar ambiente virtual
-```bash
-python -m venv venv
-source venv/bin/activate   # Linux/Mac
-venv\Scripts\activate      # Windows
-```
-
-
-# Instalar dependências
-```bash
-pip install -r requirements.txt
-```
-
-
-# Executar scraping
-```bash
-# Execute o módulo de scraping (do diretório raiz do projeto)
-python -m app.services.scraping
-```
-
-# Rodar API localmente
-```bash
-# Inicie o servidor de desenvolvimento
-uvicorn app.app:app --reload
-# Inicie o servidor de desenvolvimento em prod ( render)
-uvicorn app.app:app --host 0.0.0.0 --port 10000 --reload
-```
-
-´´´
-
-
-
-## 📡 Endpoints da API
-- Core
-
-GET /api/v1/books → Lista todos os livros.
-
-GET /api/v1/books/{id} → Detalhes de um livro específico.
-
-GET /api/v1/books/search?title={title}&category={category} → Busca por título/categoria.
-
-GET /api/v1/categories → Lista categorias disponíveis.
-
-GET /api/v1/health → Status da API.
-
-## Insights (opcionais)
-
-GET /api/v1/stats/overview → Estatísticas gerais.
-
-GET /api/v1/stats/categories → Estatísticas por categoria.
-
-GET /api/v1/books/top-rated → Livros com melhor avaliação.
-
-GET /api/v1/books/price-range?min={min}&max={max} → Livros por faixa de preço.
-
-## ML-ready (bônus)
-
-*Observação: esses endpoints são planejados e **não** estão implementados atualmente.*
-
-- GET /api/v1/ml/features → Dados formatados para features. (planejado)
-- GET /api/v1/ml/training-data → Dataset para treinamento. (planejado)
-- POST /api/v1/ml/predictions → Endpoint para predições. (planejado)
-
-## Monitoramento & Analytics (bônus)
-
-GET /api_logs → Informações de performance e logs das chamadas de api.
-
-# 🌐 Deploy
 A API está disponível publicamente em: 
 
 👉 [https://mle-tech-chalenge-1.onrender.com/](https://mle-tech-chalenge-1.onrender.com/)
 
-
-# 🎥 Vídeo de Apresentação
-👉 Link do Vídeo
-
-
-
-
-# 📑 Plano de Integração com Modelos de Machine Learning
+## 📑 Plano de Integração com Modelos de Machine Learning
 ## Objetivo
 Este plano descreve como a API pública de livros será integrada com modelos de Machine Learning (ML), garantindo que os dados coletados via web scraping sejam disponibilizados de forma escalável, reutilizável e prontos para consumo em sistemas de recomendação, análise estatística e predição.
 
@@ -473,4 +261,192 @@ Dados de /api/v1/stats/* podem ser integrados em ferramentas como Streamlit para
    │ Consumers/Apps   │
    └──────────────────┘
 ```
+
+---
+## 🏗️ Arquitetura
+Pipeline de dados:
+1. **Ingestão** → Web Scraping dos livros.  
+2. **Processamento** → Transformação e armazenamento em CSV.  
+3. **API** → Disponibilização dos dados via endpoints RESTful.  
+4. **Consumo** → Cientistas de dados e serviços de recomendação.  
+
+👉 [Diagrama Arquitetural link](https://drive.google.com/file/d/1mMyyxBYCTEJ7NRglnSQaWxvrKwlm-D3H/view?usp=sharing) <!-- substitua pelo seu diagrama -->
+
+---
+
+### 📂 Estrutura do Repositório
+
+```
+.
+├── README.md
+├── app
+|   ├── db
+│   |   └── books.db
+│   ├── __init__.py
+│   ├── app.py
+│   ├── dependencies.py
+│   ├── .env
+│   ├── settings.py
+│   ├── models
+│   │   ├── __init__.py
+│   │   ├── base.py
+│   │   ├── book.py
+│   │   ├── category.py
+│   │   ├── stats.py
+│   │   └── logs.py
+│   ├── routers
+│   │   ├── __init__.py
+│   │   ├── book.py
+│   │   ├── category.py
+│   │   ├── health.py
+│   │   ├── scraping.py
+│   │   ├── stats.py
+|   |   ├── callback.py
+│   │   ├── home.py
+│   │   ├── login.py
+│   │   ├── logout.py
+│   │   ├── log.py
+│   │   └── nolog.py
+│   ├── services
+│   │   ├── __init__.py
+│   │   ├── book.py
+│   │   ├── category.py
+│   │   ├── scraping.py
+│   │   ├── stats.py
+│   │   ├── auth_middleware.py
+│   │   └── log.py
+│   └── utils
+│       ├── __init__.py
+│       └── constants.py
+├── create_db.py
+├── docs
+│   ├── book_scraping_model.md
+│   ├── db_models.md
+│   ├── ddl.sql
+│   ├── scraping_architecture.drawio
+│   └── uml/
+│       ├── README.md
+│       ├── class_api_log.md
+│       ├── class_api_log.svg
+│       ├── class_diagram.md
+│       ├── class_diagram-1.png
+│       ├── class_diagram-1.svg
+│       ├── sequence_get_api_logs.md
+│       ├── sequence_get_api_logs.svg
+│       ├── sequence_get_book.md
+│       ├── sequence_get_book-1.png
+│       ├── sequence_get_book-1.svg
+│       ├── sequence_health.md
+│       ├── sequence_health-1.svg
+│       ├── sequence_list_books.md
+│       ├── sequence_list_books-1.svg
+│       ├── sequence_list_categories.md
+│       ├── sequence_list_categories-1.svg
+│       ├── sequence_price_range.md
+│       ├── sequence_price_range-1.svg
+│       ├── sequence_scrape_populate.md
+│       ├── sequence_scrape_populate-1.png
+│       ├── sequence_scrape_populate-1.svg
+│       ├── sequence_search_books.md
+│       ├── sequence_search_books-1.svg
+│       ├── sequence_stats_categories.md
+│       ├── sequence_stats_categories-1.svg
+│       ├── sequence_stats_overview.md
+│       ├── sequence_stats_overview-1.svg
+│       ├── sequence_top_rated.md
+│       └── sequence_top_rated-1.svg
+├── requirements.txt
+├── requirements-dev.txt
+├── .gitignore
+└── tests
+    ├── readme.md
+    ├── conftest.py
+    ├── test_auth_middleware.py
+    ├── test_logs.py
+    ├── test_models.py
+    ├── test_routers.py
+    ├── test_services.py
+    └── __pycache__/
+```
+
+---
+
+## 📌 Roadmap da execuçäo Projeto pelo time
+
+Este documento apresenta o planejamento do projeto em formato **roadmap**, dividido em sprints de 3 semanas, com visão estilo **Gantt** e **heatmap visual** para destacar dependências entre tarefas. Bem tb como o Trello de acompanhamento da evolucao do projeto.
+
+---
+
+
+## 📊 Roadmap por Semana – Projeto API Pública para Consulta de Livros
+
+| Tarefa                          | Semana 1 | Semana 2 | Semana 3 | Semana 4 | Semana 5 | Semana 6 |
+|---------------------------------|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|
+| Setup & Scraping                | 🟩🟩🟩     |          |          |          |          |          |
+| API Core                        |          | → 🟦🟦🟦   |          |          |          |          |
+| Deploy & Arquitetura            |          |          | → 🟨🟨🟨   |          |          |          |
+| Insights & Estatísticas         |          |          |          | → 🟪🟪🟪   |          |          |
+| Bônus & ML-ready                |          |          |          |          | → 🟥🟥🟥   |          |
+| Finalização & Apresentação      |          |          |          |          |          | → 🟧🟧🟧   |
+
+---
+
+### 🎨 Legenda de cores
+- 🟩 Setup & Scraping  
+- 🟦 API Core  
+- 🟨 Deploy & Arquitetura  
+- 🟪 Insights & Estatísticas  
+- 🟥 Bônus & ML-ready  
+- 🟧 Finalização & Apresentação  
+
+
+- [Trello de evolucao do projeto](https://trello.com/b/7Lrv480a/tech-chalenge-i)
+---
+
+## 📌 Observações
+
+A aplicação possui uma suíte de testes. Execute `python -m pytest tests/ -v` localmente para ver o estado atual dos testes e consulte `tests/readme.md` para informações sobre cobertura e relatórios (HTML).
+
+**Relatório HTML de cobertura:** [tests/htmlcov/index.html](tests/htmlcov/index.html)
+    - Abra esse arquivo localmente no seu navegador para visualização interativa.
+
+### Pré-requisitos
+- Python 3.9+
+- Pip ou Poetry
+- Conta em render.com
+
+### Passos
+bash
+# Clonar repositório
+```bash
+git clone https://github.com/vagnerasilva/mle_tech_chalenge_1.git
+cd seu-repo
+```
+# Criar ambiente virtual
+```bash
+python -m venv venv
+source venv/bin/activate   # Linux/Mac
+venv\Scripts\activate      # Windows
+```
+
+# Instalar dependências
+```bash
+pip install -r requirements.txt
+```
+
+# Rodar API localmente
+```bash
+# Inicie o servidor de desenvolvimento
+uvicorn app.app:app --reload
+# Inicie o servidor de desenvolvimento em prod ( render)
+uvicorn app.app:app --host 0.0.0.0 --port 10000 --reload
+```
+
+´´´
+
+# 🎥 Vídeo de Apresentação
+👉 Link do Vídeo
+
+
+
 
