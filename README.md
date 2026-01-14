@@ -11,12 +11,10 @@ O desafio consiste em criar uma API pública para consulta de livros, alimentada
 ## Scraping
 O script do web scraping localizado em `app/services/scraping.py` é responsável por:
 - **Extrair os dados brutos do site**:
-
-       A função principal `scrape_books` tem o parâmetro opcional `pages`, se ele for passado na chamada da função, o scraping é realizado só naquele número de páginas, se não, a função realiza o web scraping em todo o site, passando página a página, obtendo o link de cada livro e, então, obtendo as informações dele na sua respectiva página.
+A função principal `scrape_books` tem o parâmetro opcional `pages`, se ele for passado na chamada da função, o scraping é realizado só naquele número de páginas, se não, a função realiza o web scraping em todo o site, passando página a página, obtendo o link de cada livro e, então, obtendo as informações dele na sua respectiva página.
 
 - **Transformar e padronizar as informações coletadas**:
-
-       Algumas infomações, principalmente referentes a dinheiro foram formatadas para tirar o "Â£" e serem assumidas como numéricas. 
+Algumas infomações, principalmente referentes a dinheiro foram formatadas para tirar o "Â£" e serem assumidas como numéricas. 
 
 ### Bibliotecas usadas
 Para realizar o web scraping utilizamos a biblioteca BeautifulSoup com o parser lxml (por ser mais rápido e robusto).
@@ -135,16 +133,16 @@ Nesse caso, a autenticação requer alguns passos:
        ```
 
 ## Monitoring & Logs
-Para enriquecer os logs da nossa API fizemos uso da biblioteca `logging` em cada função e também no middleware catch_exceptions_middleware para centralizar a captura de exceptions.
+Para enriquecer os logs da nossa API fizemos uso da biblioteca `logging` em cada função e também no middleware `catch_exceptions_middleware` para centralizar a captura de exceptions.
 
+Para monitorar a api, nós temos a captura de logs de cada rota também em `catch_exceptions_middleware`, usando a biblioteca `starlette`. A integração com o banco de dados é feita em `app/services/log.py`.
 
+O dashboard de monitoramento está em https://mle-tech-chalenge-1-streamlit-qoud.onrender.com/
 
+Abaixo dois diagramas referentes aos logs.
 - [`sequence_get_api_logs.md`](docs/uml/sequence_get_api_logs.md) — GET /api_logs (consulta de logs)
 - [`class_api_log.md`](docs/uml/class_api_log.md) — Diagrama de classes do modelo `ApiLog`
 
-> Visualizações pré-geradas: `docs/uml/sequence_get_api_logs.svg`, `docs/uml/sequence_get_api_logs.png`, `docs/uml/sequence_get_api_logs.html` e `docs/uml/class_api_log.svg`, `docs/uml/class_api_log.png`, `docs/uml/class_api_log.html` — abra os `.html` para exportar as imagens via navegador.
-
-Cada arquivo Markdown contém um diagrama Mermaid que pode ser visualizado diretamente no GitHub ou em ferramentas Mermaid.
 ---
 ## 🏗️ Arquitetura
 Pipeline de dados:
