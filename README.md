@@ -4,23 +4,147 @@
 # 📚 API Pública para Consulta de Livros – Projeto de Recomendação
 
 ## 📌 Descrição
-Este projeto faz parte do Tech Challenge, cujo objetivo é aplicar de forma integrada os conhecimentos adquiridos na fase, desenvolvendo uma solução completa de dados (**web scraping** do site [Books to Scrape](https://books.toscrape.com/)), desde a coleta até a disponibilização via API pública.(FastAPI + SQLite)
+Este projeto faz parte do Tech Challenge, cujo objetivo é aplicar de forma integrada os conhecimentos adquiridos na fase 1, desenvolvendo uma solução completa de dados (**web scraping** do site [Books to Scrape](https://books.toscrape.com/)), desde a coleta até a disponibilização via API pública com endpoint para integração com modelos de machine learning.(FastAPI + SQLite)
 
 O desafio consiste em criar uma API pública para consulta de livros, alimentada por dados extraídos através de um sistema automatizado de web scraping do site Books to Scrape.
 
+## Scraping
+O script do web scraping localizado em `app/services/scraping.py` é responsável por:
+- **Extrair os dados brutos do site**:
+
+       A função principal `scrape_books` tem o parâmetro opcional `pages`, se ele for passado na chamada da função, o scraping é realizado só naquele número de páginas, se não, a função realiza o web scraping em todo o site, passando página a página, obtendo o link de cada livro e, então, obtendo as informações dele na sua respectiva página.
+
+- **Transformar e padronizar as informações coletadas**:
+
+       Algumas infomações, principalmente referentes a dinheiro foram formatadas para tirar o "Â£" e serem assumidas como numéricas. 
+
+### Bibliotecas usadas
+Para realizar o web scraping utilizamos a biblioteca BeautifulSoup com o parser lxml (por ser mais rápido e robusto).
+
+### Execução do script
+Há duas formas de executar o script:
+- A primeira delas é via terminal com o comando python scraping.py (Dessa forma retornará as 2 primeiras páginas), dentro do diretório `services`, porém essa forma vai apenas printar as informações. 
+
+- Já a segunda é integrada com a api, no endpoint `/api/v1/scraping/`. Essa forma irá popular o banco de dados com os livros e com as categorias, chamando os serviços de book e category, validando unicidade do registro para evitar quebras por duplicidade.
+
+## Banco de Dados
+Esse projeto armazena os registros de books, categories e api_logs em um SQLite. Toda a manipulação do banco de dados é feita usando a biblioteca `sqlalchemy`. Sua criação consiste na criação dos modelos das tabelas (presentes na pasta `app/models`) e execução do script `create_db.py` via terminal.
+
+## API
+A API foi projetada pensando em flexibilidade, escalabilidade, reutilização, boa organização arquitetural e facilidade de consumo por cientistas de dados, sistemas externos e serviços de recomendação. Para isso escolhemos criá-la usando FastAPI. 
+
+A organização dos códigos da API se dá da seguinte forma:
+- O `app/app.py` é responsável por orquestrar a criação da api, inclusão dos middleWares e das rotas.
+- O diretório `api/routers` contêm os arquivos de cada domínio de rotas existente na api, ou seja, o arquivo `book.py`, por exemplo, contêm os códigos responsáveis por criar cada uma das rotas de book.
+- As funções que integram com o banco de dados ficam no diretório `app/services` e são chamadas nas respectivas funções de criação do endpoint em `app/routers`.
+
+### 📡 Endpoints da API (resumo)
+- GET /api/v1/scraping → Realiza o scraping e resgistro no banco de dados.
+- GET /api/v1/books → Lista todos os livros.
+- GET /api/v1/books/{id} → Detalhes de um livro específico.
+- GET /api/v1/books/search?title={title}&category={category} → Busca por título/categoria.
+- GET /api/v1/categories → Lista categorias disponíveis.
+- GET /api/v1/health → Status da API.
+- GET /api/v1/stats/overview → Estatísticas gerais.
+- GET /api/v1/stats/categories → Estatísticas por categoria.
+- GET /api/v1/books/top-rated → Livros com melhor avaliação.
+- GET /api/v1/books/price-range?min={min}&max={max} → Livros por faixa de preço.
+- GET /callback → Rota para receber a autenticação
+- GET / → Rota não logada
+- GET /api/v1/home → Rota para home
+- GET /login → Rota para logar
+- GET /api/v1/logout → Rota para sair da api
+- GET /api_logs → Informações de performance e logs das chamadas de api.
+- GET /api/v1/ml/features → Dados formatados para features. (planejado)
+- GET /api/v1/ml/training-data → Dataset para treinamento. (planejado)
+- POST /api/v1/ml/predictions → Endpoint para predições. (planejado)
+
+### 📊 Endpoints Detalhados (Diagramas de Sequência)
+
+Todos os endpoints possuem diagramas de sequência em `docs/uml/` descrevendo o fluxo de execução:
+
+### Core
+- [`sequence_scrape_populate.md`] (docs/uml/sequence_scrape_populate.md) — GET /scraping (scrape as informações do site)
+- [`sequence_list_books.md`](docs/uml/sequence_list_books.md) — GET /books (lista todos os livros)
+- [`sequence_get_book.md`](docs/uml/sequence_get_book.md) — GET /books/{id} (livro específico)
+- [`sequence_search_books.md`](docs/uml/sequence_search_books.md) — GET /books/search (busca por título/categoria)
+- [`sequence_list_categories.md`](docs/uml/sequence_list_categories.md) — GET /categories (lista categorias)
+- [`sequence_health.md`](docs/uml/sequence_health.md) — GET /health (status da API)
+
+### Insights
+- [`sequence_stats_overview.md`](docs/uml/sequence_stats_overview.md) — GET /stats/overview (estatísticas gerais)
+- [`sequence_stats_categories.md`](docs/uml/sequence_stats_categories.md) — GET /stats/categories (estatísticas por categoria)
+- [`sequence_top_rated.md`](docs/uml/sequence_top_rated.md) — GET /books/top-rated (livros melhor avaliados)
+- [`sequence_price_range.md`](docs/uml/sequence_price_range.md) — GET /books/price-range (livros por faixa de preço)
+
+## Autenticação
+A autenticação da API aproveita o provedor de identidade do GitHub por meio da biblioteca `githubkit`, como pode ser visto em `app/services/auth_middleware.py`. Algumas rotas, como docs, api_logs são mantidas públicas estratégicamente falando para permitir previa visualização das funcionalidades da api e possibilitar integração com o streamlit de monitoramento.
+Para isso foi preciso criar uma aplicação OAuth App no GitHub, onde obtemos o Client ID e o Client Secret e indicamos a url da home e a url de callback (o arquivo `app/.env` contêm as credenciais usadas na integração da nossa api com o GitHub e é usada a partir da classe Settings de `api/settings.py`)
+
+### Autenticação produtiva
+Ao acessar nosso [site](https://mle-tech-chalenge-1.onrender.com/), a autenticação é bastante intuitiva, você apenas precisa ter uma conta no github e o restante será como uma autenticação normal.
+
+### Autenticação sistêmica - para acessar em um  jupyter notebook
+Nesse caso, a autenticação requer alguns passos:
+- 1. instale:
+       ```python
+       !pip install requests_oauthlib --force-reinstall
+       ```
+- 2. Faça o passo de autenticação:
+       ```python
+       import requests
+       from requests_oauthlib import OAuth2Session
+
+       # Dados da aplicação registrada no GitHub
+       client_id = "Ov23liTFpiWL4zMuc5Tx"
+       client_secret = "e1494122a9f7dbf97e3659dd48f609ba961a56f1"
+       redirect_uri = "https://mle-tech-chalenge-1.onrender.com/callback"
 
 
-- Extrair os dados brutos do site;
+       # URLs do GitHub
+       authorization_base_url = "https://github.com/login/oauth/authorize"
+       token_url = "https://github.com/login/oauth/access_token"
 
-- Transformar e padronizar as informações coletadas;
 
-- Armazenar esses dados localmente;
+       # Criar sessão OAuth2
+       github = OAuth2Session(client_id, redirect_uri=redirect_uri)
 
-- Disponibilizar as informações através de uma API RESTful escalável e reutilizável, pronta para integração com futuros modelos de Machine Learning.
+       # Passo 1: Obter URL de autorização
+       authorization_url, state = github.authorization_url(authorization_base_url)
+       print("Acesse este link para autorizar:", authorization_url)
+       ## Refaça esse passo na mesma aba da primeira vez para que o callback esteja unitilizado e funcione corretamente já que a sessão no github ainda estará ativa.
+       ```
+- 3. Depois da segunda execução, acesse a ferramenta DevTools do navegador para copiar o URL de redirecionamento completo que é a callback:
+       ```Python
+       # Cole o URL de redirecionamento completo em redirect_response
+       redirect_response = "https://mle-tech-chalenge-1.onrender.com/callback/?code=88a0f15c4c658edb5a29&state=L3QXDVNaZNpXEndsbMNGr9eQXW3Lmu"
 
-A API foi projetada pensando em flexibilidade, boa organização arquitetural e facilidade de consumo por cientistas de dados, sistemas externos e serviços de recomendação.
-Com isso, este repositório reúne todos os componentes essenciais: o web scraper, a estruturação do pipeline de dados, a API pública, a documentação e o deploy em produção.
+       # Passo 2: Trocar o código pelo token de acesso
+       token = github.fetch_token(
+       token_url,
+       client_secret=client_secret,
+       authorization_response=redirect_response
+       )
 
+       print("Token de acesso:", token)
+       ```
+- 4. Pronto! Basta consumir a api
+       ```python
+       response = github.get("https://mle-tech-chalenge-1.onrender.com/api/v1/stats/overview", )
+       print(response.json())
+       ```
+
+## Monitoring & Logs
+Para enriquecer os logs da nossa API fizemos uso da biblioteca `logging` em cada função e também no middleware catch_exceptions_middleware para centralizar a captura de exceptions.
+
+
+
+- [`sequence_get_api_logs.md`](docs/uml/sequence_get_api_logs.md) — GET /api_logs (consulta de logs)
+- [`class_api_log.md`](docs/uml/class_api_log.md) — Diagrama de classes do modelo `ApiLog`
+
+> Visualizações pré-geradas: `docs/uml/sequence_get_api_logs.svg`, `docs/uml/sequence_get_api_logs.png`, `docs/uml/sequence_get_api_logs.html` e `docs/uml/class_api_log.svg`, `docs/uml/class_api_log.png`, `docs/uml/class_api_log.html` — abra os `.html` para exportar as imagens via navegador.
+
+Cada arquivo Markdown contém um diagrama Mermaid que pode ser visualizado diretamente no GitHub ou em ferramentas Mermaid.
 ---
 ## 🏗️ Arquitetura
 Pipeline de dados:
@@ -90,50 +214,6 @@ Pipeline de dados:
     └── readme.md
 ```
 
-
----
-
-## 📡 Endpoints da API (resumo)
-- GET /api/v1/books → Lista todos os livros.
-- GET /api/v1/books/{id} → Detalhes de um livro específico.
-- GET /api/v1/books/search?title={title}&category={category} → Busca por título/categoria.
-- GET /api/v1/categories → Lista categorias disponíveis.
-- GET /api/v1/health → Status da API.
-- GET /api/v1/stats/overview → Estatísticas gerais.
-- GET /api/v1/stats/categories → Estatísticas por categoria.
-- GET /api/v1/books/top-rated → Livros com melhor avaliação.
-- GET /api/v1/books/price-range?min={min}&max={max} → Livros por faixa de preço.
-- GET /callback → Rota para receber a autenticação
-- GET / → Rota não logada
-- GET /api/v1/home → Rota para home
-- GET /login → Rota para logar
-- GET /api/v1/logout → Rota para sair da api
-- GET /api_logs → Informações de performance e logs das chamadas de api.
-
-## 📊 Endpoints Detalhados (Diagramas de Sequência)
-
-Todos os endpoints possuem diagramas de sequência em `docs/uml/` descrevendo o fluxo de execução:
-
-### Core
-- [`sequence_list_books.md`](docs/uml/sequence_list_books.md) — GET /books (lista todos os livros)
-- [`sequence_get_book.md`](docs/uml/sequence_get_book.md) — GET /books/{id} (livro específico)
-- [`sequence_search_books.md`](docs/uml/sequence_search_books.md) — GET /books/search (busca por título/categoria)
-- [`sequence_list_categories.md`](docs/uml/sequence_list_categories.md) — GET /categories (lista categorias)
-- [`sequence_health.md`](docs/uml/sequence_health.md) — GET /health (status da API)
-
-### Insights
-- [`sequence_stats_overview.md`](docs/uml/sequence_stats_overview.md) — GET /stats/overview (estatísticas gerais)
-- [`sequence_stats_categories.md`](docs/uml/sequence_stats_categories.md) — GET /stats/categories (estatísticas por categoria)
-- [`sequence_top_rated.md`](docs/uml/sequence_top_rated.md) — GET /books/top-rated (livros melhor avaliados)
-- [`sequence_price_range.md`](docs/uml/sequence_price_range.md) — GET /books/price-range (livros por faixa de preço)
-
-### Monitoring & Logs
-- [`sequence_get_api_logs.md`](docs/uml/sequence_get_api_logs.md) — GET /api_logs (consulta de logs)
-- [`class_api_log.md`](docs/uml/class_api_log.md) — Diagrama de classes do modelo `ApiLog`
-
-> Visualizações pré-geradas: `docs/uml/sequence_get_api_logs.svg`, `docs/uml/sequence_get_api_logs.png`, `docs/uml/sequence_get_api_logs.html` e `docs/uml/class_api_log.svg`, `docs/uml/class_api_log.png`, `docs/uml/class_api_log.html` — abra os `.html` para exportar as imagens via navegador.
-
-Cada arquivo Markdown contém um diagrama Mermaid que pode ser visualizado diretamente no GitHub ou em ferramentas Mermaid.
 
 ## 🚀 Instalação rápida
 
