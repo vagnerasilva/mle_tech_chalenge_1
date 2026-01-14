@@ -121,14 +121,14 @@ O versionamento explícito permite:
 
 - /api/v1
 
-       Primeira versão estável da API, contendo os endpoints core de consulta de livros, categorias, scraping, estatísticas e monitoramento.
+  Primeira versão estável da API, contendo os endpoints core de consulta de livros, categorias, scraping, estatísticas e monitoramento.
 
 - Novas versões (v2, v3, …)
 Serão criadas quando houver:
 
-       - Mudanças incompatíveis no formato de resposta (breaking changes)
-       - Alterações significativas na lógica dos endpoints
-       - Introdução de novos fluxos, como autenticação diferente ou endpoints de ML em produção
+ - Mudanças incompatíveis no formato de resposta (breaking changes)
+  - Alterações significativas na lógica dos endpoints
+  - Introdução de novos fluxos, como autenticação diferente ou endpoints de ML em produção
 
 #### Compatibilidade
 
@@ -139,9 +139,9 @@ Serão criadas quando houver:
 
 O versionamento é especialmente importante para cenários de Machine Learning, pois garante:
 
-       - Reprodutibilidade de experimentos
-       - Estabilidade nos dados consumidos por pipelines de treino
-       - Segurança na evolução de features e datasets ao longo do tempo
+  - Reprodutibilidade de experimentos
+  - Estabilidade nos dados consumidos por pipelines de treino
+  - Segurança na evolução de features e datasets ao longo do tempo
 
 ## Autenticação
 A autenticação da API aproveita o gerenciador de acesso do GitHub por meio da biblioteca `githubkit`, como pode ser visto em `app/services/auth_middleware.py`. Isso é interessante visto que não precisamos gerenciar os usuários.
@@ -286,42 +286,34 @@ Não há mecanismo de cache para respostas frequentes, o que pode gerar leituras
 ### Próximos Passos (Evolução do Projeto)
 
 - Migração do banco de dados
-       - Substituir o SQLite por um banco relacional mais robusto, como PostgreSQL, com uso de Redis para cache de consultas frequentes.
+  - Substituir o SQLite por um banco relacional mais robusto, como PostgreSQL, com uso de Redis para cache de consultas frequentes.
 
 - Scraping assíncrono e agendado
-       - Implementar scraping assíncrono e/ou agendado utilizando filas (ex.: Celery, RQ ou SQS) ou orquestradores como Airflow.
+  - Implementar scraping assíncrono e/ou agendado utilizando filas (ex.: Celery, RQ ou SQS) ou orquestradores como Airflow.
 
 - Implementação completa do pipeline ML
 
-       - Disponibilizar datasets prontos para treino
-
-       - Criar um modelo inicial de recomendação de livros
-
-       - Versionar modelos e features
+  - Disponibilizar datasets prontos para treino
+  - Criar um modelo inicial de recomendação de livros
+  - Versionar modelos e features
 
 - Melhorias de segurança
 
-       - Rate limiting
-
-       - Controle de permissões por perfil
-
-       - Tokens com expiração e refresh automatizado
+  - Rate limiting
+  - Controle de permissões por perfil
+  - Tokens com expiração e refresh automatizado
 
 - Observabilidade avançada
 
-       - Métricas de performance (latência, throughput)
-
-       - Alertas automatizados
-
-       - Dashboards mais completos de monitoramento
+  - Métricas de performance (latência, throughput)
+  - Alertas automatizados
+  - Dashboards mais completos de monitoramento
 
 - Escalabilidade e Cloud-Native
 
-       - Containerização com Docker
-
-       - Deploy com CI/CD
-
-       - Suporte a múltiplas versões da API
+  - Containerização com Docker
+  - Deploy com CI/CD
+  - Suporte a múltiplas versões da API
 
 ## Diagrama Visual
 ```
