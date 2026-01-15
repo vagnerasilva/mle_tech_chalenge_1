@@ -5,17 +5,24 @@ from app.models.ml import PredictionRequest, PredictionResponse
 
 def get_features(db: Session):
     """
-    Retorna apenas features úteis para ML.
+    Retorna features prontas pra analise do cientista
     """
-    books = db.query(Book).all()
+    books = (
+        db.query(Book)
+        .join(Book.category) 
+        .all()
+    )
 
     features = []
     for b in books:
         features.append({
-            "id": b.id,
-            "price": float(b.price),
-            "rating": b.rating,
-            "availability": 1 if b.availability else 0,
+            "book_id": b.id,
+            "title": b.title,
+            "price_incl_tax": float(b.price_incl_tax), 
+            "tax": float(b.tax),
+            "availability": int(b.availability),
+            "rating": int(b.rating) if b.rating is not None else None,
+            "number_of_reviews": int(b.number_of_reviews or 0),
             "category": b.category.name
         })
 
@@ -24,7 +31,7 @@ def get_features(db: Session):
 
 def get_training_data(db: Session):
     """
-    Retorna features + target fictício (ex: livro caro = 1, barato = 0).
+    Retorna uma amostra de dados para o treinamento do modelo
     """
     books = db.query(Book).all()
 
@@ -37,15 +44,13 @@ def get_training_data(db: Session):
             "price": float(b.price),
             "rating": b.rating,
             "availability": 1 if b.availability else 0,
-            "category": b.category.name,
-            # Target mockado — você define como quiser
-            "label_is_expensive": 1 if b.price > 50 else 0
+            "category": b.category.name
         })
 
     return {
         "columns": [
             "id", "title", "price", "rating",
-            "availability", "category", "label_is_expensive"
+            "availability", "category"
         ],
         "data": dataset
     }
@@ -53,7 +58,7 @@ def get_training_data(db: Session):
 
 def predict(payload: PredictionRequest) -> PredictionResponse:
     """
-    Predição mockada — apenas para demonstrar funcionamento do endpoint.
+    Predição mockada — apenas para demonstrar funcionamento do endpoint
     """
     score = (payload.rating * 0.4) + (payload.price * 0.05)
 
