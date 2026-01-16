@@ -207,15 +207,16 @@ Para enriquecer os logs da nossa API fizemos uso da biblioteca `logging` em cada
 Para monitorar a api, nós temos a captura de logs de cada rota também em `catch_exceptions_middleware`, usando a biblioteca `starlette`. A integração com o banco de dados é feita em `app/services/log.py`.
 
 O dashboard de monitoramento está em https://mle-tech-chalenge-1-streamlit-qoud.onrender.com/
+![alt text](./docs/streamlit.png)
 
 Abaixo, dois diagramas referentes aos logs.
 - [`sequence_get_api_logs.md`](docs/uml/sequence_get_api_logs.md) — GET /api_logs (consulta de logs)
 - [`class_api_log.md`](docs/uml/class_api_log.md) — Diagrama de classes do modelo `ApiLog`
 
+👉 repositorio do streamlit de monitoramento: [https://github.com/vagnerasilva/mle_tech_chalenge_1_streamlit/](https://github.com/vagnerasilva/mle_tech_chalenge_1_streamlit/)
 
 ## 🌐 Deploy
-
-INCLUIR EXPLICAÇÃO DO RENDER
+Utilizamos o site Render.com que é uma plataforma de aplicativos em nuvem que simplifica o processo de hospedar, construir e escalar aplicações web, desde sites estáticos (HTML, CSS, JS) até serviços de back-end complexos, APIs, bancos de dados (Postgres, Redis) e workers. Ele automatiza implantações a partir de repositórios Git (GitHub, GitLab), oferece CDNs globais para velocidade e tem um plano gratuito, facilitando o deploy de diversos tipos de projetos sem grande configuração inicial.
 
 A API está disponível publicamente em: 
 
@@ -356,7 +357,7 @@ Pipeline de dados:
 3. **API** → Disponibilização dos dados via endpoints RESTful.  
 4. **Consumo** → Cientistas de dados e serviços de recomendação.  
 
-👉 [Diagrama Arquitetural link](https://drive.google.com/file/d/1AE_LhUABf7asm-2K3pkIXUFuG20Aajez/view?usp=sharing) <!-- substitua pelo seu diagrama -->
+👉 [Diagrama Arquitetural link](https://drive.google.com/file/d/1AE_LhUABf7asm-2K3pkIXUFuG20Aajez/view?usp=sharing) 
 
 ---
 
@@ -583,21 +584,10 @@ A modularização facilita:
 #### Logs Estruturados
 
 Utilizados para:
-# Streamlit com statisticas do consumo da api 
-👉 Link Monitoramento: [Streamlit](https://mle-tech-chalenge-1-streamlit-qoud.onrender.com/)
-
-![alt text](./docs/streamlit.png)
-
 - Registro de erros e stack traces
 - Execução de endpoints
 - Monitoramento de performance
 - Rastreamento de eventos importantes
-
-👉 repositorio do streamlit de monitoramento: [https://github.com/vagnerasilva/mle_tech_chalenge_1_streamlit/](https://github.com/vagnerasilva/mle_tech_chalenge_1_streamlit/)
-
-# 📑 Plano de Integração com Modelos de Machine Learning
-## Objetivo
-Este plano descreve como a API pública de livros será integrada com modelos de Machine Learning (ML), garantindo que os dados coletados via web scraping sejam disponibilizados de forma escalável, reutilizável e prontos para consumo em sistemas de recomendação, análise estatística e predição.
 
 ### 🔐 Segurança
 
