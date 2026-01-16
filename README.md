@@ -649,11 +649,4 @@ A suíte de testes abrange:
 # 🎥 Vídeo de Apresentação
 👉 Link do Vídeo
 
-# Streamlit com statisticas do consumo da api 
-👉 Link Monitoramento: [Streamlit](https://mle-tech-chalenge-1-streamlit-qoud.onrender.com/)
-
-![alt text](./docs/streamlit.png)
-
-
-👉 repositorio do streamlit de monitoramento: [https://github.com/vagnerasilva/mle_tech_chalenge_1_streamlit/](https://github.com/vagnerasilva/mle_tech_chalenge_1_streamlit/)
 
