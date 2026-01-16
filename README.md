@@ -589,6 +589,8 @@ Utilizados para:
 - Monitoramento de performance
 - Rastreamento de eventos importantes
 
+---
+
 ### 🔐 Segurança
 
 - Uso de autenticação para proteger rotas sensíveis
