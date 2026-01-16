@@ -353,7 +353,7 @@ Não há mecanismo de cache para respostas frequentes, o que pode gerar leituras
 ## 🏗️ Arquitetura
 Pipeline de dados:
 1. **Ingestão** → Web Scraping dos livros.  
-2. **Processamento** → Transformação e armazenamento em CSV.  
+2. **Processamento** → Transformação e armazenamento em SQLite.  
 3. **API** → Disponibilização dos dados via endpoints RESTful.  
 4. **Consumo** → Cientistas de dados e serviços de recomendação.  
 
