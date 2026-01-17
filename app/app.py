@@ -12,7 +12,8 @@ from app.routers import (
     callback,
     home,
     nolog,
-    ml
+    ml,
+    log
 )
 from app.utils.constants import API_PREFIX, logger
 from starlette.middleware.sessions import SessionMiddleware
@@ -28,11 +29,11 @@ app = FastAPI(
     description="Documentação da API",
     version="1.0.0",
     servers=[
-        {"url": "https://mle-tech-chalenge-1.vercel.app/", "description": "Produção"},
+        {"url": "https://mle-tech-chalenge-1.onrender.com/", "description": "Produção"},
         {"url": "http://localhost:8000/", "description": "Desenvolvimento"},
     ],
 )
-## Importante pra poder funcionar na porta principal do Vercel 
+## Importante pra poder funcionar na porta principal do Render.com
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
@@ -67,7 +68,16 @@ async def catch_exceptions_middleware(request: Request, call_next):
             res_body = None
 
         # Add the background task to the response object to queue the job
-        response.background = BackgroundTask(write_log, request, response, req_body, res_body, process_time)
+        # Skip logging for the `/api_logs` endpoint to avoid recording retrievals
+        if not request.url.path.startswith("/api_logs"):
+            response.background = BackgroundTask(
+                write_log,
+                request,
+                response,
+                req_body,
+                res_body,
+                process_time,
+            )
         return response
     except SQLAlchemyError as e:
         logger.error(f"Erro no banco de dados: {e}")
@@ -85,6 +95,10 @@ async def catch_exceptions_middleware(request: Request, call_next):
 app.include_router(
     nolog.router,
     tags=["no_logged"]
+)
+app.include_router(
+    log.router,
+    tags=["api_logs"]
 )
 app.include_router(
     home.router,

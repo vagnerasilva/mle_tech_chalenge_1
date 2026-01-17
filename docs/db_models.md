@@ -75,6 +75,38 @@ CREATE TABLE books (
 -- ALTER TABLE books ADD CHECK (rating BETWEEN 0 AND 5);
 ```
 
+### `api_logs`
+
+- **Nome da tabela:** `api_logs`  
+- **Campos:**
+  - `id INTEGER PRIMARY KEY AUTOINCREMENT`
+  - `api_key UUID (nullable)`
+  - `ip_address TEXT NOT NULL`
+  - `path TEXT NOT NULL`
+  - `method TEXT NOT NULL`
+  - `status_code INTEGER NOT NULL`
+  - `query_params JSON`
+  - `path_params JSON`
+  - `process_time REAL NOT NULL`
+  - `created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP`
+
+**Descrição:** armazena logs de requisições HTTP feitas à API, incluindo informações de entrada, saída e tempo de processamento.
+
+**Exemplo SQL CREATE:**
+```sql
+CREATE TABLE api_logs (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  api_key UUID,
+  ip_address TEXT NOT NULL,
+  path TEXT NOT NULL,
+  method TEXT NOT NULL,
+  status_code INTEGER NOT NULL,
+  query_params JSON,
+  path_params JSON,
+  process_time REAL NOT NULL,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
 ## Schemas Pydantic
 
 Os arquivos `app/models/*.py` também expõem schemas para serialização/response via FastAPI.
@@ -172,6 +204,7 @@ Arquivo(s) de referência do modelo
 - `app/models/book.py`
 - `app/models/category.py`
 - `app/models/stats.py`
+- `app/models/logs.py`
 - `app/services/book.py` (fluxo de inserção `post_books`)
 - `app/services/category.py` (mapeamento de nome -> id)
 

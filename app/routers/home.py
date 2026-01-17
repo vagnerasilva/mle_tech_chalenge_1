@@ -138,7 +138,7 @@ async def home(request: Request):
             <div class="card">
                 <h3>Veja a lista de todas as rotas disponíveis</h3>
                 <p> Acesse a documentação para saber mais sobre as rotas <p>
-                <a href="/docs">Login →</a>
+                <a href="/docs">Documentação →</a>
             </div>
             <table>
                 <tr>

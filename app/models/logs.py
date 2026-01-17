@@ -19,4 +19,3 @@ class ApiLog(Base):
     path_params = Column(JSON, nullable=True)
     process_time = Column(Float, nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
-
