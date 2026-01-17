@@ -10,9 +10,16 @@ router = APIRouter()
 @router.get("/features")
 def get_features(db: Session = Depends(get_db)):
     """
-    Retorna um dataset contendo apenas as features usadas para modelos de ML.
+    Retorna as features usadas para modelos de ML.
     """
     return ml.get_features(db)
+
+@router.get("/features-normalized")
+def get_features_normalized(db: Session = Depends(get_db)):
+    """
+    Retorna as features usadas para modelos de ML (normalizado).
+    """
+    return ml.get_features_normalized(db)
 
 
 @router.get("/training-data")

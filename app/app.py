@@ -11,7 +11,8 @@ from app.routers import (
     logout,
     callback,
     home,
-    nolog
+    nolog,
+    ml
 )
 from app.utils.constants import API_PREFIX, logger
 from starlette.middleware.sessions import SessionMiddleware
@@ -130,3 +131,8 @@ app.include_router(
         prefix=f"{API_PREFIX}/logout",
         tags=["logout"]
     )
+app.include_router(
+        ml.router,
+        prefix=f"{API_PREFIX}/ml",
+        tags=["ml"]
+)

@@ -33,7 +33,7 @@ Pipeline de dados:
 
 ---
 
-
+MUDAR
 ### 📂 Estrutura do Repositório
 
 ```
@@ -50,6 +50,7 @@ Pipeline de dados:
 │   │   ├── base.py
 │   │   ├── book.py
 │   │   ├── category.py
+|   |   ├── ml.py
 │   │   └── stats.py
 │   ├── routers
 │   │   ├── __init__.py
@@ -57,12 +58,14 @@ Pipeline de dados:
 │   │   ├── category.py
 │   │   ├── health.py
 │   │   ├── scraping.py
+│   │   ├── ml.py
 │   │   └── stats.py
 │   ├── services
 │   │   ├── __init__.py
 │   │   ├── book.py
 │   │   ├── category.py
 │   │   ├── scraping.py
+│   │   ├── ml.py
 │   │   └── stats.py
 │   └── utils
 │       ├── __init__.py
@@ -97,6 +100,10 @@ Pipeline de dados:
 - GET /api/v1/stats/categories → Estatísticas por categoria.
 - GET /api/v1/books/top-rated → Livros com melhor avaliação.
 - GET /api/v1/books/price-range?min={min}&max={max} → Livros por faixa de preço.
+- GET /api/v1/ml/features → Dados formatados para features.
+- GET /api/v1/ml/features-normalized -> Dados formatados para features (normalizado).
+- GET /api/v1/ml/training-data → Dataset para treinamento.
+- POST /api/v1/ml/predictions → Endpoint para predições.
 
 ## 📊 Endpoints Detalhados (Diagramas de Sequência)
 
@@ -275,6 +282,8 @@ GET /api/v1/books/price-range?min={min}&max={max} → Livros por faixa de preço
 ## ML-ready (bônus)
 
 GET /api/v1/ml/features → Dados formatados para features.
+
+GET /api/v1/ml/features-normalized -> Dados formatados para features (normalizado).
 
 GET /api/v1/ml/training-data → Dataset para treinamento.
 
