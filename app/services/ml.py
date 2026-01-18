@@ -102,7 +102,7 @@ def get_training_data(db: Session):
         dataset.append({
             "id": b.id,
             "title": b.title,
-            "price": float(b.price),
+            "price": float(b.price_incl_tax),
             "rating": b.rating,
             "availability": 1 if b.availability else 0,
             "category": b.category.name
