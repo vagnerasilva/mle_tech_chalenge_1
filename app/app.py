@@ -12,6 +12,7 @@ from app.routers import (
     callback,
     home,
     nolog,
+    ml,
     log
 )
 from app.utils.constants import API_PREFIX, logger
@@ -144,3 +145,8 @@ app.include_router(
         prefix=f"{API_PREFIX}/logout",
         tags=["logout"]
     )
+app.include_router(
+        ml.router,
+        prefix=f"{API_PREFIX}/ml",
+        tags=["ml"]
+)
