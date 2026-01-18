@@ -652,4 +652,4 @@ https://mle-tech-chalenge-1.onrender.com/
 
 **Cecília** https://www.skills.google/public_profiles/cdf83d75-ed8c-485d-aaab-c21d03d505a8?qlcampaign=wwwgoogle
 **Vagner** 
-**Pedro** 
+**Pedro** https://www.skills.google/public_profiles/eeec3185-51b2-431e-aae2-e95978cc3344
