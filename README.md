@@ -73,13 +73,13 @@ GET /api/v1/books/price-range?min={min}&max={max} → Livros por faixa de preço
 
 #### ML-ready (bônus)
 
-*Observação: esses endpoints são planejados e **não** estão implementados atualmente.*
+GET /api/v1/ml/features → Dados formatados para features. 
 
-GET /api/v1/ml/features → Dados formatados para features. (planejado)
+GET /api/v1/ml/features-normalized → Dados formatados para features. 
 
-GET /api/v1/ml/training-data → Dataset para treinamento. (planejado)
+GET /api/v1/ml/training-data → Dataset para treinamento.
 
-POST /api/v1/ml/predictions → Endpoint para predições. (planejado)
+POST /api/v1/ml/predictions → Endpoint para predições.
 
 #### Monitoramento & Analytics (bônus)
 
@@ -238,7 +238,7 @@ Cientista de dados usam /api/v1/stats/overview e /api/v1/stats/categories para a
  
 #### Preparação de Features
 
-Endpoint /api/v1/ml/features fornece dados já normalizados, facilitando integração direta com frameworks como Scikit-learn, TensorFlow ou PyTorch.
+Endpoint /api/v1/ml/features-normalized fornece dados já normalizados, facilitando integração direta com frameworks como Scikit-learn, TensorFlow ou PyTorch.
 
 #### Treinamento de Modelos
 
@@ -277,9 +277,6 @@ A aplicação utiliza SQLite por simplicidade e facilidade de setup local. Essa 
 
 - Scraping síncrono
 O scraping é executado de forma síncrona, podendo impactar o tempo de resposta da API quando acionado em produção.
-
-- Endpoints de Machine Learning não implementados
-Os endpoints ML-ready (/ml/features, /ml/training-data, /ml/predictions) estão documentados e planejados, mas ainda não fazem parte da versão atual da API.
 
 - Ausência de cache
 Não há mecanismo de cache para respostas frequentes, o que pode gerar leituras repetidas do banco de dados.
@@ -330,13 +327,14 @@ Não há mecanismo de cache para respostas frequentes, o que pode gerar leituras
    │  Database   │
    └──────┬──────┘
           │
-   ┌──────▼───────────────┐
-   │     API REST         │
-   │  /books /categories  │
-   │  /ml/features        │
-   │  /ml/training-data   │
-   │  /ml/predictions     │
-   └──────┬───────────────┘
+   ┌──────▼────────────────────┐
+   │     API REST              │
+   │  /books /categories       │
+   │  /ml/features             │
+   │  /ml/features-normalized  │
+   │  /ml/training-data        │
+   │  /ml/predictions          │
+   └──────┬────────────────────┘
           │
    ┌──────▼──────┐
    │   ML Model  │
@@ -379,6 +377,7 @@ Pipeline de dados:
 │   │   ├── base.py
 │   │   ├── book.py
 │   │   ├── category.py
+│   │   ├── ml.py
 │   │   ├── stats.py
 │   │   └── logs.py
 │   ├── routers
@@ -392,12 +391,14 @@ Pipeline de dados:
 │   │   ├── home.py
 │   │   ├── login.py
 │   │   ├── logout.py
+│   │   ├── ml.py
 │   │   ├── log.py
 │   │   └── nolog.py
 │   ├── services
 │   │   ├── __init__.py
 │   │   ├── book.py
 │   │   ├── category.py
+│   │   ├── ml.py
 │   │   ├── scraping.py
 │   │   ├── stats.py
 │   │   ├── auth_middleware.py
@@ -641,4 +642,6 @@ A suíte de testes abrange:
 # 🎥 Vídeo de Apresentação
 👉 Link do Vídeo
 
+# Colab com Caminho de um cientista de dados utilizando nossa API
+[Acesse aqui](https://colab.research.google.com/drive/1QUlIDbrepc2dhe5AaKsWEbxXsDKusP08?usp=sharing)
 
