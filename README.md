@@ -639,9 +639,17 @@ A suíte de testes abrange:
 - Dashboard externo para visualização de uso e performance
 - Endpoint dedicado `/api_logs` para consulta de logs
 
-# 🎥 Vídeo de Apresentação
-👉 Link do Vídeo
-
-# Colab com Caminho de um cientista de dados utilizando nossa API
+## Colab com Caminho de um cientista de dados utilizando nossa API
 [Acesse aqui](https://colab.research.google.com/drive/1QUlIDbrepc2dhe5AaKsWEbxXsDKusP08?usp=sharing)
 
+# 🎥 Vídeo de Apresentação
+[Acesse aqui](https://drive.google.com/file/d/1tZcwtGVeOulEaOROOHJn3kKI8wQVWwpS/view?usp=sharing)
+
+# Link da API
+https://mle-tech-chalenge-1.onrender.com/
+
+# Comprovantes do curso do google
+
+- **Cecília** https://www.skills.google/public_profiles/cdf83d75-ed8c-485d-aaab-c21d03d505a8?qlcampaign=wwwgoogle
+- **Vagner** https://www.skills.google/public_profiles/947f002b-fce3-49c0-b6b2-5f2a7edad09a 
+- **Pedro** https://www.skills.google/public_profiles/eeec3185-51b2-431e-aae2-e95978cc3344
