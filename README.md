@@ -643,7 +643,7 @@ A suíte de testes abrange:
 [Acesse aqui](https://colab.research.google.com/drive/1QUlIDbrepc2dhe5AaKsWEbxXsDKusP08?usp=sharing)
 
 # 🎥 Vídeo de Apresentação
-👉 Link do Vídeo
+[Acesse aqui](https://drive.google.com/file/d/1tZcwtGVeOulEaOROOHJn3kKI8wQVWwpS/view?usp=sharing)
 
 # Link da API
 https://mle-tech-chalenge-1.onrender.com/
